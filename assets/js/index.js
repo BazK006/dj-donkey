@@ -1,58 +1,87 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const videoCards = document.querySelectorAll('.video-card');
-
     videoCards.forEach(card => {
         const video = card.querySelector('.custom-video');
 
-        if (video) {
-            card.addEventListener('click', () => {
-                if (!video.paused) {
-                    video.pause();
-                } else {
-                    document.querySelectorAll('.custom-video').forEach(v => {
-                        v.pause();
-                    });
-                    video.muted = false;
-                    video.play().catch(error => {
-                        console.log("Autoplay / Play prevented:", error);
-                    });
-                }
-            });
-        }
-    });
-});
+        if (!video) return;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // ดึงรายการเมนูทั้งหมดที่มีคลาส .nav-link-item
-    const navItems = document.querySelectorAll('.nav-link-item');
+        card.addEventListener('click', () => {
 
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            // ดึง ID ของ Section จาก data-target
-            const targetId = item.getAttribute('data-target');
-            const targetSection = document.querySelector(targetId);
-
-            if (targetSection) {
-                // คำนวณตำแหน่งและเลื่อนอย่างนุ่มนวล (Smooth Scroll)
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            if (!video.paused) {
+                video.pause();
+                return;
             }
+
+            document.querySelectorAll('.custom-video').forEach(v => {
+                v.pause();
+            });
+
+            video.muted = false;
+
+            video.play().catch(error => {
+                console.log('Video playback prevented:', error);
+            });
         });
     });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
     const navigation = document.getElementById('mainNavigation');
-    if (!navigation || !window.bootstrap) return;
+    const navItems = document.querySelectorAll('.nav-link-item');
 
-    navigation.querySelectorAll('a.nav-link').forEach((link) => {
-        link.addEventListener('click', () => {
-            const collapse = window.bootstrap.Collapse.getInstance(navigation);
-            if (collapse) collapse.hide();
+    const header = document.querySelector('.site-header')
+        || document.querySelector('header.fixed-top');
+
+    function scrollToSection(targetSection) {
+        const headerHeight = header
+            ? header.getBoundingClientRect().height
+            : 0;
+
+        const spacing = 16;
+
+        const targetPosition =
+            window.scrollY +
+            targetSection.getBoundingClientRect().top -
+            headerHeight -
+            spacing;
+
+        window.scrollTo({
+            top: Math.max(0, targetPosition),
+            behavior: 'smooth'
+        });
+    }
+
+    navItems.forEach(item => {
+        item.addEventListener('click', event => {
+
+            const targetId =
+                item.getAttribute('data-target') ||
+                item.getAttribute('href');
+
+            if (!targetId || !targetId.startsWith('#')) return;
+
+            const targetSection = document.getElementById(
+                targetId.substring(1)
+            );
+
+            if (!targetSection)
+                return;
+
+            event.preventDefault();
+            if (navigation && navigation.classList.contains('show')
+                && window.bootstrap?.Collapse) {
+                navigation.addEventListener(
+                    'hidden.bs.collapse',
+                    () => {
+                        scrollToSection(targetSection);
+                    },
+                    { once: true }
+                );
+                bootstrap.Collapse
+                    .getOrCreateInstance(navigation)
+                    .hide();
+            } else {
+                scrollToSection(targetSection);
+            }
         });
     });
 });

@@ -1,0 +1,782 @@
+/* =========================================
+   DJ DONKEY - SECTION HOME
+   CINEMATIC 3D LOGO EXPERIENCE
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.home-about-group {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+
+  row-gap: 0;
+  column-gap: 0;
+}
+
+.home-about-group>#hero.logo-hero {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  min-height: 100svh;
+  height: auto;
+
+  margin: 0 !important;
+  padding-bottom: 18px;
+
+  flex-shrink: 0;
+}
+
+#hero .logo-stage {
+  height: clamp(300px, 53svh, 580px);
+}
+
+.home-about-group>#about {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 !important;
+  padding-top: 0 !important;
+  flex-shrink: 0;
+}
+
+#about>.flex-grow-1 {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+#hero+#about {
+  margin-block-start: 0 !important;
+  padding-block-start: 0 !important;
+}
+
+
+/* =========================================
+   02. HERO MAIN
+========================================= */
+.logo-hero {
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding:
+    calc(var(--site-header-height, 78px) + 16px) clamp(18px, 4vw, 64px) 24px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(ellipse at 50% 43%,
+      rgba(125, 12, 25, 0.19),
+      transparent 50%),
+    radial-gradient(ellipse at 50% 100%,
+      rgba(197, 161, 88, 0.055),
+      transparent 48%),
+    #080808;
+
+  color: #FFFFFF;
+}
+
+
+/* =========================================
+   03. CINEMATIC BACKGROUND
+========================================= */
+
+.logo-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    linear-gradient(90deg,
+      transparent 49.9%,
+      rgba(255, 255, 255, 0.025) 50%,
+      transparent 50.1%);
+
+  opacity: 0.5;
+}
+
+.logo-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: min(900px, 90vw);
+  height: 500px;
+
+  top: 15%;
+  left: 50%;
+
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(ellipse,
+      rgba(214, 168, 87, 0.075),
+      rgba(170, 12, 32, 0.055) 35%,
+      transparent 72%);
+
+  filter: blur(35px);
+
+  animation: donkey-spotlight 7s ease-in-out infinite alternate;
+}
+
+
+@keyframes donkey-spotlight {
+  from {
+    opacity: 0.55;
+    transform: translateX(-50%) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.08);
+  }
+
+}
+
+
+/* =========================================
+   04. HERO INNER CONTENT
+========================================= */
+
+.logo-hero-inner {
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  gap: 1.1rem;
+}
+
+
+/* =========================================
+   05. LOGO KICKER
+========================================= */
+
+.logo-kicker {
+  position: relative;
+
+  margin: 0;
+
+  color: #C5A158;
+
+  font-size: 0.72rem;
+  font-weight: 800;
+
+  letter-spacing: 0.28em;
+
+  text-transform: uppercase;
+}
+
+.logo-kicker span {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0.35rem;
+}
+
+
+/* =========================================
+   06. 3D LOGO STAGE
+========================================= */
+
+.logo-stage {
+  position: relative;
+
+  width: min(1500px, 96vw);
+
+  height: clamp(340px, 62svh, 650px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  touch-action: pan-y;
+
+  cursor: grab;
+}
+
+.logo-stage.is-dragging {
+  cursor: grabbing;
+}
+
+
+/* Logo Glow */
+.logo-stage::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 72%;
+  height: 55%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(ellipse,
+      rgba(210, 35, 54, 0.14),
+      rgba(197, 161, 88, 0.075) 40%,
+      transparent 72%);
+
+  filter: blur(35px);
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+/* =========================================
+   07. THREE.JS CANVAS
+========================================= */
+
+#logo-canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  z-index: 2;
+
+  opacity: 0;
+
+  filter:
+    drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 25px rgba(190, 24, 42, 0.12));
+
+  transition: opacity 0.65s ease;
+}
+
+
+/* Canvas Ready */
+.logo-stage.is-ready #logo-canvas {
+  opacity: 1;
+}
+
+
+/* Software Renderer */
+.logo-stage .software-renderer {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 2;
+}
+
+.logo-stage canvas[hidden] {
+  display: none;
+}
+
+
+/* =========================================
+   08. FALLBACK LOGO
+========================================= */
+
+.logo-fallback {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: min(65%, 750px);
+  height: 70%;
+
+  transform: translate(-50%, -50%);
+
+  object-fit: contain;
+
+  z-index: 1;
+
+  opacity: 0.7;
+
+  filter:
+    drop-shadow(0 0 30px rgba(197, 161, 88, 0.15));
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+
+
+.logo-stage.is-ready .logo-fallback {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+/* =========================================
+   09. HERO ACTIONS
+========================================= */
+
+.logo-hero .hero-actions {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 16px;
+
+  margin-top: 0;
+}
+
+
+/* Base Button */
+.logo-hero .button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.7rem;
+
+  min-width: 195px;
+  min-height: 56px;
+
+  padding: 14px 25px;
+
+  border: 1px solid transparent;
+
+  font-family: inherit;
+
+  font-size: 0.76rem;
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-decoration: none;
+  text-transform: uppercase;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* Gold CTA */
+.logo-hero .button-gold {
+  color: #080808;
+
+  background: #C5A158;
+
+  border-color: #C5A158;
+
+  box-shadow:
+    0 5px 25px rgba(197, 161, 88, 0.12);
+}
+
+.logo-hero .button-gold:hover {
+  background: #E0BE7E;
+
+  border-color: #E0BE7E;
+
+  box-shadow:
+    0 8px 30px rgba(197, 161, 88, 0.22);
+
+  transform: translateY(-3px);
+}
+
+
+/* Outline CTA */
+.logo-hero .button-outline {
+  color: #FFFFFF;
+
+  background: rgba(255, 255, 255, 0.015);
+
+  border-color: rgba(255, 255, 255, 0.3);
+
+  backdrop-filter: blur(6px);
+}
+
+.logo-hero .button-outline:hover {
+  color: #C5A158;
+
+  border-color: #C5A158;
+
+  background: rgba(197, 161, 88, 0.06);
+
+  transform: translateY(-3px);
+}
+
+.logo-hero .button-outline span {
+  font-size: 1.1rem;
+}
+
+
+/* =========================================
+   10. RENDER STATUS
+========================================= */
+
+.logo-hero .render-status {
+  min-height: 16px;
+
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 0.65rem;
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   11. HERO GENRES
+========================================= */
+
+.logo-hero .genres {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 0.7rem;
+  font-weight: 300;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.logo-hero .genres span {
+  color: #C5A158;
+  margin: 0 0.45rem;
+}
+
+
+/* =========================================
+   12. BOTTOM MOTION CONTROLS
+========================================= */
+
+/* ปัจจุบัน HTML มี Controls อยู่ตรงกลางเพียงชุดเดียว */
+.logo-hero-bottom {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* Motion Tools */
+.logo-hero .motion-tools {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+
+/* Drag Hint */
+.logo-hero .drag-hint {
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 0.62rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* Control Buttons */
+.logo-hero .motion-tools button {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 36px;
+
+  padding: 7px 12px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  background: transparent;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  font-family: inherit;
+
+  font-size: 0.62rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+
+.logo-hero .motion-tools button:hover:not(:disabled) {
+  color: #C5A158;
+
+  border-color: #C5A158;
+
+  background: rgba(197, 161, 88, 0.05);
+}
+
+
+.logo-hero .motion-tools button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+
+#motion-icon {
+  color: #C5A158;
+  font-size: 0.85rem;
+}
+
+
+/* =========================================
+   13. TABLET
+========================================= */
+
+@media (max-width: 991.98px) {
+
+  .logo-hero {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .logo-stage {
+    height: clamp(320px, 58svh, 550px);
+  }
+
+  .logo-hero-inner {
+    gap: 1rem;
+  }
+
+  .logo-hero .genres {
+    text-align: center;
+  }
+
+}
+
+
+/* =========================================
+   14. MOBILE
+========================================= */
+
+@media (max-width: 575.98px) {
+
+  .logo-hero {
+    min-height: 100svh;
+
+    padding:
+      calc(var(--site-header-height, 68px) + 12px) 1rem 15px;
+  }
+
+  .logo-hero-inner {
+    gap: 1rem;
+  }
+
+  .logo-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+  }
+
+  .logo-stage {
+    width: 100%;
+
+    height: clamp(250px, 43svh, 390px);
+
+    min-height: 250px;
+  }
+
+  .logo-fallback {
+    width: 85%;
+    height: 60%;
+  }
+
+  .logo-hero .hero-actions {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .logo-hero .button {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 48px;
+
+    padding: 12px 8px;
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.08em;
+  }
+
+  .logo-hero .render-status {
+    font-size: 0.58rem;
+  }
+
+  .logo-hero .genres {
+    font-size: 0.61rem;
+
+    letter-spacing: 0.07em;
+
+    text-align: center;
+  }
+
+  .logo-hero .genres span {
+    margin: 0 0.2rem;
+  }
+
+  .logo-hero-bottom {
+    padding-top: 12px;
+  }
+
+  .logo-hero .motion-tools {
+    gap: 8px;
+  }
+
+  .logo-hero .drag-hint {
+    width: 100%;
+    text-align: center;
+  }
+
+  .logo-hero .motion-tools button {
+    font-size: 0.57rem;
+    padding: 7px 9px;
+  }
+
+}
+
+
+/* =========================================
+   15. SMALL MOBILE
+========================================= */
+@media (max-width: 375px) {
+  .logo-hero {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .logo-stage {
+    height: 36svh;
+    min-height: 230px;
+  }
+
+  .logo-hero .button {
+    font-size: 0.59rem;
+    letter-spacing: 0.05em;
+  }
+
+  .logo-hero .genres {
+    font-size: 0.56rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .home-about-group>#hero.logo-hero {
+    min-height: 85svh;
+  }
+
+  #hero .logo-stage {
+    height: clamp(260px, 48svh, 480px);
+  }
+
+}
+
+@media (max-width: 575.98px) {
+  .home-about-group>#hero.logo-hero {
+    min-height: 80svh;
+  }
+
+  #hero .logo-stage {
+    height: clamp(230px, 38svh, 350px);
+    min-height: 230px;
+  }
+
+}
+
+/* =========================================
+   16. ACCESSIBILITY
+========================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  .logo-hero::after {
+    animation: none;
+  }
+
+  .logo-hero .button {
+    transition: none;
+  }
+
+  #logo-canvas,
+  .logo-fallback {
+    transition: none;
+  }
+
+}

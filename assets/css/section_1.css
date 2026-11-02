@@ -1,45 +1,664 @@
-/* การตั้งค่าสำหรับ Section 1 (About) */
+/* =========================================
+   DJ DONKEY - SECTION 1: ABOUT
+   HERO + PORTRAIT + INFINITE MARQUEE
+========================================= */
+
+
+/* =========================================
+   FONT
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+
+/* =========================================
+   01. ABOUT SECTION
+========================================= */
+
 #about {
-    background-color: var(--brand-darkbg);
-    padding-top: 100px;
-    padding-bottom: 100px;
+    font-family: "Inter", sans-serif;
 }
 
-.about-heading {
-    font-size: clamp(2.5rem, 5vw, 4.2rem);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
+
+/* =========================================
+   02. ABOUT CONTENT
+========================================= */
+
+.about-text-content {
+    padding-left: 7% !important;
+    padding-right: 5%;
 }
 
-.about-text {
-    font-size: clamp(0.9rem, 1.2vw, 1rem);
-    color: rgba(255, 255, 255, 0.7);
+.about-subheading {
+    color: var(--brand-gold, #D6A857);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+}
+
+.about-main-heading {
+    font-size: clamp(3.2rem, 5.2vw, 6rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+}
+
+.about-body-text {
+    color: #E0E0E0;
+    font-size: 1.1rem;
     line-height: 1.6;
+    max-width: 480px;
+    font-weight: 500;
 }
 
-.about-image {
+
+/* =========================================
+   03. HERO IMAGE WRAPPER
+   RED BACKGROUND + PORTRAIT
+========================================= */
+
+.about-image-wrapper {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    width: 100% !important;
+
+    background-color: #B51222;
+}
+
+/* Background Image: red_bg.png */
+.about-image-wrapper>img.w-100.h-100 {
+    display: block;
+
     width: 100%;
-    height: auto;
-    max-height: 650px;
+    height: 100%;
+
     object-fit: cover;
+    object-position: 50% 20%;
+}
+
+
+/* =========================================
+   04. PORTRAIT BASE
+========================================= */
+
+.about-person {
+    position: absolute;
+    bottom: 0;
+
+    height: 100%;
+    width: auto;
+    max-width: 72%;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    pointer-events: none;
+    user-select: none;
     display: block;
 }
 
-/* สไตล์สำหรับ Tags (Genres) */
-.genre-badge {
-    display: inline-block;
-    padding: 0.5rem 1.25rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50rem;
-    text-transform: uppercase;
-    background-color: transparent;
-    transition: all 0.2s ease;
+
+/* =========================================
+   BACK PORTRAIT
+   Optional Second Person
+========================================= */
+
+.about-person-back {
+    right: 2%;
+
+    height: 86%;
+    max-width: 60%;
+
+    z-index: 1;
+
+    opacity: 0.88;
+
+    filter: brightness(0.78);
 }
 
-.genre-badge:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.05);
+
+/* =========================================
+   FRONT PORTRAIT
+   DESKTOP DESIGN - KEEP ORIGINAL SETTINGS
+========================================= */
+
+.about-image-wrapper .about-person-front {
+    position: absolute;
+
+    right: 1%;
+
+    height: 185%;
+    max-width: 90%;
+    width: auto;
+
+    bottom: -55%;
+
+    z-index: 2;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    filter: drop-shadow(15px 5px 25px rgba(0, 0, 0, 0.3));
+}
+
+
+/* =========================================
+   05. IMAGE GRADIENT
+========================================= */
+
+.about-image-gradient {
+    position: absolute;
+    inset: 0;
+
+    z-index: 3;
+    pointer-events: none;
+
+    background: linear-gradient(to right,
+            #050505 0%,
+            rgba(5, 5, 5, 0.85) 15%,
+            rgba(5, 5, 5, 0.35) 35%,
+            transparent 60%);
+}
+
+
+/* =========================================
+   06. IMAGE POSITION
+========================================= */
+
+.position-lg-absolute {
+    position: relative !important;
+
+    width: 100% !important;
+    height: 50vh !important;
+}
+
+
+/* =========================================
+   07. INFINITE MARQUEE
+========================================= */
+
+/* Main Container */
+.marquee-bottom-bar {
+    position: relative;
+
+    width: 100%;
+    height: 52px;
+
+    background-color: #050505;
+
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+/* Moving Track */
+.marquee-track {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    width: max-content;
+    height: 100%;
+
+    gap: 0;
+
+    animation: scrollMarquee 25s linear infinite;
+
+    will-change: transform;
+}
+
+
+/* Loop Group */
+.marquee-loop-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    flex: 0 0 auto;
+
+    width: max-content;
+
+    gap: 0.85rem;
+}
+
+
+/* Content */
+.marquee-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    flex-wrap: nowrap;
+    flex: 0 0 auto;
+
+    width: max-content;
+    min-width: 0;
+
+    gap: 0.85rem;
+
+    padding: 0;
+
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+
+/* Marquee Text */
+.marquee-text {
+    display: inline-block;
+
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    font-size: 0.95rem;
+    font-weight: 800;
+
+    color: #FFFFFF;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+
+/* Icon Link */
+.marquee-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 auto;
+
+    text-decoration: none;
+}
+
+
+/* Icon */
+.marquee-icon {
+    display: block;
+
+    width: 20px;
+    height: 20px;
+
+    object-fit: contain;
+
+    margin: 0;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Icon Hover */
+.marquee-icon-link:hover .marquee-icon {
+    transform: scale(1.15);
+}
+
+
+/* =========================================
+   08. INFINITE LOOP ANIMATION
+========================================= */
+
+@keyframes scrollMarquee {
+
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(var(--marquee-offset, -50%),
+                0,
+                0);
+    }
+
+}
+
+
+/* =========================================
+   09. DESKTOP - 992PX AND ABOVE
+   PRESERVE ORIGINAL PORTRAIT
+========================================= */
+
+@media (min-width: 992px) {
+
+    #about {
+        height: auto;
+    }
+
+    .position-lg-absolute {
+        position: absolute !important;
+
+        width: 60% !important;
+        height: 100% !important;
+    }
+
+    .about-image-wrapper.position-lg-absolute {
+        width: 60% !important;
+        height: 100% !important;
+    }
+
+    .about-text-content {
+        padding-left: 7% !important;
+        padding-right: 5%;
+    }
+
+    /* Keep Preferred Front Portrait */
+    .about-image-wrapper .about-person-front {
+        right: 1%;
+
+        height: 185%;
+        max-width: 90%;
+        bottom: -55%;
+    }
+
+}
+
+
+/* =========================================
+   10. TABLET - 768PX TO 991PX
+========================================= */
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+    #about {
+        height: auto;
+    }
+
+    .about-image-wrapper.position-lg-absolute {
+        position: relative !important;
+
+        width: 100% !important;
+        height: clamp(380px, 55vw, 540px) !important;
+
+        min-height: 0;
+    }
+
+    /* Tablet Front Portrait */
+    .about-image-wrapper .about-person-front {
+        right: 2%;
+
+        height: 155%;
+        max-width: 95%;
+        bottom: -45%;
+    }
+
+    /* Tablet Back Portrait */
+    .about-person-back {
+        right: 1%;
+
+        height: 82%;
+        max-width: 58%;
+    }
+
+    .about-text-content {
+        padding: 3.5rem 5% !important;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.8rem, 7vw, 4.8rem);
+    }
+
+    .about-body-text {
+        font-size: 1.05rem;
+        max-width: 620px;
+    }
+
+    .about-image-gradient {
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.2) 18%,
+                transparent 55%);
+    }
+
+}
+
+
+/* =========================================
+   11. MOBILE - 576PX TO 767PX
+========================================= */
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+    #about {
+        height: auto;
+    }
+
+    .about-image-wrapper.position-lg-absolute {
+        position: relative !important;
+
+        width: 100% !important;
+        height: clamp(340px, 65vw, 440px) !important;
+    }
+
+    /* Mobile Front Portrait */
+    .about-image-wrapper .about-person-front {
+        right: 1%;
+
+        height: 148%;
+        max-width: 100%;
+        bottom: -43%;
+    }
+
+    .about-person-back {
+        right: 0;
+
+        height: 82%;
+        max-width: 60%;
+    }
+
+    .about-text-content {
+        padding: 3.5rem 1.75rem !important;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.7rem, 7.5vw, 4rem);
+    }
+
+    .about-body-text {
+        font-size: 1rem;
+        max-width: 560px;
+    }
+
+    .about-image-gradient {
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.2) 18%,
+                transparent 55%);
+    }
+
+}
+
+
+/* =========================================
+   12. SMALL MOBILE - 375PX TO 575PX
+========================================= */
+
+@media (min-width: 376px) and (max-width: 575.98px) {
+
+    #about {
+        height: auto;
+    }
+
+    .about-image-wrapper.position-lg-absolute {
+        position: relative !important;
+
+        width: 100% !important;
+        height: clamp(300px, 78vw, 420px) !important;
+    }
+
+    /* Small Mobile Front Portrait */
+    .about-image-wrapper .about-person-front {
+        right: 0%;
+
+        height: 140%;
+        max-width: 100%;
+        bottom: -40%;
+    }
+
+    .about-person-back {
+        right: 0;
+
+        height: 80%;
+        max-width: 60%;
+    }
+
+    .about-text-content {
+        padding: 3rem 1.5rem !important;
+    }
+
+    .about-subheading {
+        font-size: 0.85rem;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.35rem, 9vw, 3.4rem);
+    }
+
+    .about-body-text {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .about-image-gradient {
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.18) 15%,
+                transparent 55%);
+    }
+
+}
+
+
+/* =========================================
+   13. EXTRA SMALL MOBILE - 375PX AND BELOW
+========================================= */
+
+@media (max-width: 375px) {
+
+    #about {
+        height: auto;
+    }
+
+    .about-image-wrapper.position-lg-absolute {
+        position: relative !important;
+
+        width: 100% !important;
+        height: 300px !important;
+
+        min-height: 300px;
+    }
+
+    /* Extra Small Front Portrait */
+    .about-image-wrapper .about-person-front {
+        right: -2%;
+
+        height: 135%;
+        max-width: 105%;
+        bottom: -38%;
+    }
+
+    .about-person-back {
+        right: -1%;
+
+        height: 78%;
+        max-width: 58%;
+    }
+
+    .about-text-content {
+        padding: 2.5rem 1.25rem !important;
+    }
+
+    .about-subheading {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.2rem, 9.5vw, 2.8rem);
+        line-height: 1.04;
+    }
+
+    .about-body-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .about-image-gradient {
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.15) 15%,
+                transparent 55%);
+    }
+
+}
+
+
+/* =========================================
+   14. MARQUEE RESPONSIVE
+========================================= */
+
+@media (max-width: 767.98px) {
+
+    .marquee-bottom-bar {
+        height: 46px;
+    }
+
+    .marquee-track {
+        animation-duration: 22s;
+    }
+
+    .marquee-content,
+    .marquee-loop-group {
+        gap: 0.7rem;
+    }
+
+    .marquee-text {
+        font-size: 0.85rem;
+    }
+
+    .marquee-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+}
+
+
+/* =========================================
+   15. EXTRA SMALL MARQUEE
+========================================= */
+
+@media (max-width: 375px) {
+
+    .marquee-text {
+        font-size: 0.8rem;
+    }
+
+    .marquee-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+}
+
+
+/* =========================================
+   16. ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .marquee-track {
+        animation: none;
+        transform: none;
+    }
+
+    .marquee-icon {
+        transition: none;
+    }
+
+    .about-person {
+        transition: none;
+    }
+
 }
