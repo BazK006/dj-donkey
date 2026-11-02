@@ -1,29 +1,24 @@
+
 const SITE_CONFIG = {
   bookingUrl: '',
   bookingLabel: 'Get in touch',
   setVideoUrl: '',
-
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('.site-header');
   const navigation = document.querySelector('#mainNavigation');
-  const navItems = document.querySelectorAll('.nav-link-item');
-
   const watchSetButton = document.querySelector('#watch-set');
 
   const reduceMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)'
   );
 
-
   if (!header) {
     console.warn('DONKEY UI: Header not found.');
   }
 
-
   function scrollToSection(targetSection) {
-
     if (!targetSection) return;
 
     const headerHeight = header
@@ -38,21 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
       headerHeight -
       spacing;
 
-
     window.scrollTo({
-
       top: Math.max(0, targetPosition),
-
-      behavior: reduceMotion.matches
-        ? 'auto'
-        : 'smooth'
-
+      behavior: reduceMotion.matches ? 'auto' : 'smooth',
     });
-
   }
 
   function getTargetFromLink(link) {
-
     const targetId =
       link.getAttribute('data-target') ||
       link.getAttribute('href');
@@ -70,9 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeMobileMenu(callback) {
     if (!navigation || !navigation.classList.contains('show')) {
-
       callback();
-
       return;
     }
 
@@ -87,24 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
       { once: true }
     );
 
-    const collapse = bootstrap.Collapse.getOrCreateInstance(
+    const collapse = window.bootstrap.Collapse.getOrCreateInstance(
       navigation,
       { toggle: false }
     );
 
     collapse.hide();
-
   }
 
   document.addEventListener('click', (event) => {
-    const link = event.target.closest('a[href^="#"]');
-    if (!link)
-      return;
+    const link = event.target instanceof Element
+      ? event.target.closest('a[href^="#"]')
+      : null;
+
+    if (!link) return;
 
     const targetSection = getTargetFromLink(link);
 
-    if (!targetSection)
-      return;
+    if (!targetSection) return;
 
     event.preventDefault();
 
@@ -117,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (window.history?.replaceState) {
-      history.replaceState(
+      window.history.replaceState(
         null,
         '',
         `#${targetSection.id}`
@@ -127,89 +112,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (watchSetButton) {
     watchSetButton.addEventListener('click', (event) => {
-      if (!SITE_CONFIG.setVideoUrl) {
-        return;
-      }
+      if (!SITE_CONFIG.setVideoUrl) return;
 
       event.preventDefault();
+      event.stopPropagation();
+
       window.open(
         SITE_CONFIG.setVideoUrl,
         '_blank',
         'noopener,noreferrer'
       );
-
     });
-
   }
 
   if (SITE_CONFIG.bookingUrl) {
     document.querySelectorAll('[data-booking-link]')
-      .forEach(link => {
-
+      .forEach((link) => {
         link.href = SITE_CONFIG.bookingUrl;
-        link.textContent =
-          SITE_CONFIG.bookingLabel + ' ↗';
+        link.textContent = `${SITE_CONFIG.bookingLabel} ↗`;
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
       });
-  }
-
-  const sections = [
-    document.querySelector('#home'),
-    document.querySelector('#about'),
-    document.querySelector('#live-performance'),
-    document.querySelector('#gallery-section'),
-    document.querySelector('#contact-section')
-  ].filter(Boolean);
-
-  if ('IntersectionObserver' in window) {
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        const visibleSections = entries
-          .filter(entry => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              b.intersectionRatio - a.intersectionRatio
-          );
-
-        if (!visibleSections.length) return;
-
-        const activeId =
-          visibleSections[0].target.id;
-
-        navItems.forEach(item => {
-          const itemTarget =
-            item.getAttribute('data-target') ||
-            item.getAttribute('href');
-
-          const isActive =
-            itemTarget === `#${activeId}`;
-          item.classList.toggle(
-            'active',
-            isActive
-          );
-
-          if (isActive) {
-            item.setAttribute(
-              'aria-current',
-              'location'
-            );
-          } else {
-            item.removeAttribute('aria-current');
-          }
-        });
-      },
-
-      {
-        root: null,
-        rootMargin: '-25% 0px -55% 0px',
-        threshold: [0, 0.1, 0.25, 0.5, 0.75]
-      }
-    );
-
-    sections.forEach(section => {
-      sectionObserver.observe(section);
-    });
   }
 
   console.info(
