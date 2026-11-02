@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
 
-    <link rel="stylesheet" href="assets/css/section_3d.css">
+    <link rel="stylesheet" href="assets/css/3d.css">
 
     <script type="importmap">
     {
@@ -127,7 +127,12 @@
 
                         <a href="#live-performance" class="button button-outline" id="watch-set">
                             WATCH A SET
-                            <span aria-hidden="true">↗</span>
+                            <span class="external-icon" aria-hidden="true">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 11L12 4M6 4H12V10" stroke="currentColor" stroke-width="1.6"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
                         </a>
                     </div>
 
@@ -137,26 +142,30 @@
                 </div>
             </section>
 
-            <!-- Section: 1 -->
-            <section id="about" class="position-relative w-100 overflow-hidden d-flex flex-column"
-                style="background-color: #050505; min-height: 100vh;">
 
-                <div class="flex-grow-1 d-flex flex-column flex-lg-row position-relative">
+            <!-- Section: 1 - ABOUT -->
+            <section id="about" class="about-section position-relative w-100 d-flex flex-column">
 
-                    <div class="about-image-wrapper position-relative position-lg-absolute top-0 end-0 h-100 order-1 order-lg-2"
-                        style="z-index: 1;">
+                <div class="about-layout flex-grow-1 d-flex flex-column flex-lg-row position-relative">
 
-                        <div class="position-absolute top-0 start-0 w-50 h-100 d-none d-lg-block"
-                            style="background: linear-gradient(to right, #050505 0%, rgba(5,5,5,0.8) 20%, transparent 100%); z-index: 2;">
+                    <!-- ABOUT IMAGE -->
+                    <div
+                        class="about-image-wrapper position-relative position-lg-absolute top-0 end-0 h-100 order-2 order-lg-2">
+
+                        <div class="about-image-gradient position-absolute top-0 start-0 w-50 h-100 d-none d-lg-block"
+                            aria-hidden="true">
                         </div>
 
-                        <img src="assets/images/red_bg.png" alt="DJ Donkey" class="w-100 h-100"
-                            style="object-fit: cover; object-position: 50% 20%; transform: scale(1.00); transform-origin: center top;">
+                        <img src="assets/images/red_bg.png" alt="" aria-hidden="true"
+                            class="about-background-image w-100 h-100">
 
                         <img src="assets/images/people.png" alt="DJ Donkey" class="about-person about-person-front">
+
                     </div>
 
-                    <div class="container-fluid p-0 d-flex w-100 order-2 order-lg-1" style="z-index: 2;">
+
+                    <!-- ABOUT CONTENT -->
+                    <div class="about-content-layer container-fluid p-0 d-flex w-100 order-1 order-lg-1">
                         <div
                             class="col-12 col-lg-6 d-flex flex-column justify-content-center about-text-content position-relative z-3">
 
@@ -164,31 +173,29 @@
                                 About Donkey
                             </p>
 
-                            <h2 class="text-uppercase text-white mb-4 about-main-heading" style="font-weight: 700;">
+                            <h2 class="text-uppercase text-white mb-4 about-main-heading">
                                 ROOTED IN<br>
                                 HIP-HOP.<br>
                                 DRIVEN BY<br>
                                 THE CROWD.
                             </h2>
 
-                            <p class="mb-0 about-body-text" style="font-weight: 300;">
+                            <p class="mb-0 about-body-text">
                                 DJ DONKEY connects tracks, genres, and familiar hooks into high-energy sets shaped by
-                                the
-                                room. The approach is simple: stay connected to the crowd, keep the music moving, and
-                                make
-                                space for the unexpected.
+                                the room. The approach is simple: stay connected to the crowd, keep the music moving,
+                                and
+                                make space for the unexpected.
                             </p>
-
                         </div>
                     </div>
                 </div>
 
-
+                <!-- MARQUEE -->
                 <div class="marquee-bottom-bar">
                     <div class="marquee-track">
-
                         <div class="marquee-content">
-                            <span class="marquee-text ms-2.5">HIP-HOP</span>
+
+                            <span class="marquee-text">HIP-HOP</span>
                             <span class="marquee-icon-wrap">
                                 <img src="assets/icons/head.svg" alt="" class="marquee-icon">
                             </span>
@@ -223,7 +230,6 @@
                 </div>
 
             </section>
-
         </div>
 
         <!-- ================= SECTION 2: LIVE PERFORMANCE ================= -->
