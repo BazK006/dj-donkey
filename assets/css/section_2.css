@@ -1,157 +1,51 @@
 /* =========================================
-   Section: International Experience (Grid)
+   Section: Live Performance
 ========================================= */
-
-#international {
-    background-color: var(--brand-darkbg);
-    padding-top: 100px;
-    padding-bottom: 100px;
+#live-performance {
+    /* ใช้ฟอนต์หลักที่มีความหนาแน่น เพื่อให้ได้ทรงเรขาคณิตแบบภาพต้นฉบับ */
+    font-family: "Inter", sans-serif;
 }
 
-/* ขนาดหัวข้อหลัก */
-.intl-heading {
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
-    line-height: 0.85;
-    letter-spacing: -0.02em;
-}
-
-/* 
-  เทคนิคการสร้าง Hairline Grid 1px โดยไม่ให้เส้นทับซ้อนกัน 
-  Container มีแค่ขอบ บน-ซ้าย 
-*/
-.tour-grid-container {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* 
-  Card แต่ละใบมีแค่ขอบ ขวา-ล่าง 
-*/
-.tour-card {
-    position: relative;
-    overflow: hidden;
-    /* เพื่อตัดเส้นวงกลมส่วนที่ล้นออก */
-    background-color: rgba(255, 255, 255, 0.01);
-    /* สว่างกว่าพื้นหลังหลักนิดเดียวให้ดูเป็นกล่อง */
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 2.5rem 1.5rem 2rem 1.5rem;
-    min-height: 320px;
-    transition: background-color 0.3s ease;
-}
-
-.tour-card:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-}
-
-/* Micro-Detail: เส้นวงกลมซ้อนมุมขวาบน (Concentric Arcs) */
-.tour-card::before,
-.tour-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 50%;
-    transform: translate(50%, -50%);
-    pointer-events: none;
-}
-
-/* วงใน */
-.tour-card::before {
-    width: 180px;
-    height: 180px;
-}
-
-/* วงนอก */
-.tour-card::after {
-    width: 280px;
-    height: 280px;
-}
-
-/* Typography ในการ์ด */
-.card-number {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.3);
-    font-weight: 500;
-}
-
-.card-code {
-    font-size: 28px;
-    color: var(--brand-gold);
-    line-height: 1;
-}
-
-.card-country {
-    font-size: clamp(1.75rem, 2vw, 2.25rem);
-    line-height: 0.9;
-    color: #ffffff;
-}
-
-.card-subtext {
-    font-size: 8px;
+/* ตั้งค่าข้อความรองสีทอง */
+.perf-subheading {
+    color: var(--brand-gold, #D6A857);
+    /* สีทองตามภาพต้นฉบับ */
+    font-size: 0.95rem;
     letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.3);
-    margin-top: 12px;
 }
 
-/* =========================================
-   Section: Infinite Marquee (แถบข้อความเลื่อน)
-========================================= */
+/* ตั้งค่าข้อความหลักให้หนาและชิดกัน */
+.perf-heading {
+    font-size: clamp(3.2rem, 5.2vw, 5.5rem);
+    /* Responsive Size */
+    font-weight: 900;
+    /* น้ำหนักหนามาก */
+    line-height: 1.05;
+    /* ระยะบรรทัดชิดกัน */
+    letter-spacing: -0.02em;
+    /* บีบช่องไฟตัวอักษรเล็กน้อย */
+}
 
-.marquee-section {
-    margin-top: 20px;
-    /* ระยะห่างจาก Section 2 */
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    /* เส้นขอบบนบางๆ */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    /* เส้นขอบล่างบางๆ */
-    background-color: var(--brand-darkbg);
-    padding: 0.8rem 0;
-    /* ความหนาของแถบดำ */
-    overflow: hidden;
+/* ตั้งค่าบล็อกสี่เหลี่ยมสีขาว */
+.perf-placeholder-block {
+    background-color: #FFFFFF;
+    /* พื้นหลังสีขาวล้วนตามภาพ */
     width: 100%;
+    /* กำหนดสัดส่วนภาพเป็นแนวตั้ง (คล้ายวิดีโอ Reels/TikTok) */
+    aspect-ratio: 4 / 5;
+    /* เผื่อไว้สำหรับใส่ลูกเล่นเวลานำเมาส์ไปชี้ในอนาคต */
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.marquee-wrapper {
-    display: flex;
-    overflow: hidden;
-    user-select: none;
+/* เอฟเฟกต์เล็กน้อย เมื่อชี้ที่บล็อกว่าง (ใส่หรือไม่ใส่ก็ได้) */
+.perf-placeholder-block:hover {
+    opacity: 0.8;
+    cursor: pointer;
 }
 
-.marquee-content {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    min-width: 100%;
-    animation: marqueeScroll 25s linear infinite;
-}
-
-.marquee-text {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #e0e0e0;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-}
-
-.marquee-star {
-    color: var(--brand-gold);
-    font-size: 1.25rem;
-    margin: 0 2rem;
-    line-height: 1;
-}
-
-@keyframes marqueeScroll {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-100%);
+/* Responsive สำหรับหน้าจอมือถือ */
+@media (max-width: 767.98px) {
+    .perf-heading {
+        font-size: 3.2rem;
     }
 }

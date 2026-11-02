@@ -4,37 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DJ GOBLIN - Portfolio</title>
+    <title>DJ Donkey</title>
 
-    <!-- โหลด Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- โหลด Google Fonts: Space Grotesk -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="assets/css/section_1.css">
     <link rel="stylesheet" href="assets/css/section_2.css">
     <link rel="stylesheet" href="assets/css/section_3.css">
     <link rel="stylesheet" href="assets/css/section_4.css">
-    <link rel="stylesheet" href="assets/css/section_5.css">
     <link rel="stylesheet" href="assets/css/ui_responsive.css">
-</head>
 
-<!-- แก้ Body: ลบ hero-background, min-vh-100 และ overflow-hidden ออก เพื่อให้เว็บ Scroll ได้ตามปกติ -->
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/Logo.svg">
+
+    <link rel="stylesheet" href="assets/css/section_3d.css">
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./vendor/three.module.js"
+        }
+    }
+    </script>
+    <script src="./ui.js" defer></script>
+    <script type="module" src="./main.js"></script>
+</head>
 
 <body class="position-relative d-flex flex-column"
     style="background-color: var(--brand-darkbg); color: #ffffff; font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased;">
 
-    <!-- Responsive Bootstrap Navbar -->
-    <header class="header-gradient fixed-top z-3">
-        <nav class="navbar navbar-expand-lg navbar-dark py-2 nav-shell">
+    <header class="header-gradient site-header fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-xxl px-3 px-sm-4 px-lg-5">
-                <a class="navbar-brand d-flex align-items-center user-select-none m-0" href="#"
-                    aria-label="DJ Donkey home">
-                    <img src="assets/icons/Logodjdonkey.png" alt="DJ Donkey Logo" class="site-logo">
+
+                <a class="navbar-brand d-flex align-items-center m-0" href="#about" aria-label="DJ Donkey home">
+                    <img src="assets/icons/Logo.svg" alt="DJ Donkey Logo" class="site-logo">
                 </a>
 
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
@@ -44,570 +55,347 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNavigation">
-                    <ul
-                        class="navbar-nav ms-auto align-items-lg-center gap-lg-3 gap-xl-4 py-3 py-lg-0 fw-semibold tracking-superwide">
-                        <li class="nav-item"><a class="nav-link nav-link-item" href="#about"
-                                data-target="#about">ABOUT</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-item" href="#performance"
-                                data-target="#performance">PERFORMANCE</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-item" href="#gallery"
-                                data-target="#gallery">GALLERY</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-item" href="#booking"
-                                data-target="#booking">BOOKING</a></li>
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3 gap-xl-4">
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-item" href="#about" data-target="#about">
+                                ABOUT
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-item" href="#live-performance" data-target="#live-performance">
+                                PERFORMANCE
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-item" href="#gallery-section" data-target="#gallery-section">
+                                GALLERY
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-item nav-contact-link" href="#contact-section"
+                                data-target="#contact-section">
+                                BOOKING
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
+
             </div>
         </nav>
     </header>
 
     <main class="flex-grow-1">
-        <!-- ================= HERO SECTION ================= -->
-        <section id="hero" class="hero-background min-vh-100 d-flex align-items-center position-relative">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5 py-5">
-                <div class="hero-content">
+        <div id="home" class="home-about-group">
+            <section id="hero" class="logo-hero position-relative" aria-labelledby="hero-title">
 
-                    <p class="fw-bold tracking-superwide text-uppercase mb-3"
-                        style="color: var(--brand-gold); font-size: 13px;">
-                        Bangkok &middot; Thailand
-                    </p>
+                <h1 id="hero-title" class="visually-hidden">
+                    DONKEY — Hip-hop. Open format. High energy.
+                </h1>
 
-                    <h1 class="fw-bold title-fluid text-uppercase mb-4">
-                        DJ<br>Donkey
-                    </h1>
+                <div class="logo-hero-inner">
+                    <div class="logo-stage" id="logo-stage" role="img"
+                        aria-label="Three-dimensional DONKEY logo. Drag to explore the 3D logo.">
 
-                    <p class="fw-medium tracking-superwide text-uppercase mb-5 text-light" style="font-size: 15px;">
-                        Hip-Hop &middot; Open Format &middot; High Energy
-                    </p>
+                        <img class="logo-fallback" src="./assets/icons/Logo.svg" alt="" aria-hidden="true">
 
-                    <div class="hero-actions d-flex flex-column flex-sm-row gap-3">
-                        <button class="btn btn-gold rounded-pill fw-bold tracking-widest text-uppercase px-5 py-3"
-                            style="font-size: 12px;">
-                            Book DJ Goblin
-                        </button>
-                        <button
-                            class="btn btn-outline-custom rounded-pill fw-bold tracking-widest text-uppercase px-5 py-3 d-flex align-items-center justify-content-center gap-2"
-                            style="font-size: 12px;">
-                            Watch Sets
-
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SECTION 1: ABOUT ================= -->
-        <section id="about" class="section-padding">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
-                <div class="row align-items-center gy-4 gy-lg-5">
-
-                    <div class="col-12 col-lg-6 pe-lg-5">
-                        <p class="fw-bold tracking-widest text-uppercase mb-3"
-                            style="color: var(--brand-gold); font-size: 12px;">
-                            ABOUT THE ARTIST
-                        </p>
-
-                        <h2 class="fw-bold text-white text-uppercase mb-4 about-heading">
-                            CROWD-FIRST.<br>
-                            HIGH<br>
-                            ENERGY.
-                        </h2>
-
-                        <p class="about-text mb-4">
-                            DJ GOBLIN is a Bangkok-based DJ known for high-energy, open-format sets that seamlessly
-                            blend
-                            Hip-Hop, R&B, Pop, Pop Dance, and exclusive edits.
-                        </p>
-
-                        <p class="about-text mb-5">
-                            Built around crowd connection, fast-paced transitions and unexpected genre switches, his
-                            sets
-                            move
-                            from club anthems to sing-along moments without losing momentum. GOBLIN has brought his
-                            signature
-                            sound to international crowds across Asia.
-                        </p>
-
-                        <div class="d-flex flex-wrap gap-2">
-                            <span class="genre-badge">HIP-HOP</span>
-                            <span class="genre-badge">OPEN FORMAT</span>
-                            <span class="genre-badge">R&B</span>
-                            <span class="genre-badge">POP</span>
-                            <span class="genre-badge">POP DANCE</span>
-                            <span class="genre-badge">HIGH ENERGY EDITS</span>
-                        </div>
+                        <canvas id="logo-canvas" aria-hidden="true">
+                        </canvas>
                     </div>
 
-                    <div class="col-12 col-lg-6">
-                        <img src="assets/images/img_1.png" alt="DJ Goblin Portrait" class="about-image img-fluid"
-                            style="object-fit: cover; object-position: center 20%;">
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SECTION 2: International ================= -->
-        <section id="international" class="section-padding">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
-
-                <!-- ส่วน Header ของ Section -->
-                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end mb-5">
                     <div>
-                        <p class="fw-bold tracking-widest text-uppercase mb-3"
-                            style="color: var(--brand-gold); font-size: 12px;">
-                            INTERNATIONAL EXPERIENCE
-                        </p>
-
-                        <h2 class="fw-bold text-white text-uppercase m-0 intl-heading">
-                            GOBLIN<br>
-                            ACROSS ASIA.
-                        </h2>
-                    </div>
-
-                    <div class="text-start text-lg-end mt-4 mt-lg-0 d-none d-md-block">
-                        <p class="tracking-widest text-uppercase m-0"
-                            style="color: rgba(255,255,255,0.4); font-size: 10px; line-height: 1.8;">
-                            SELECTED INTERNATIONAL<br>PERFORMANCES &middot; ASIA
+                        <p class="genres">
+                            HIP-HOP
+                            <span>·</span>
+                            OPEN FORMAT
+                            <span>·</span>
+                            HIGH ENERGY
                         </p>
                     </div>
-                </div>
 
-                <div class="row g-3 tour-grid-container mb-3">
 
-                    <!-- Card 01: SOUTH KOREA -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="tour-card">
-                            <div class="d-flex justify-content-between align-items-start z-1">
-                                <span class="card-number">01</span>
-                                <span class="card-code fw-bold">KR</span>
-                            </div>
-                            <div class="z-1">
-                                <!-- ข้อความ SOUTH KOREA ตัดขึ้นบรรทัดใหม่ตามต้นฉบับ -->
-                                <h3 class="card-country fw-bold text-uppercase m-0">SOUTH<br>KOREA</h3>
-                                <p class="card-subtext text-uppercase m-0 mt-3">INTERNATIONAL PERFORMANCE</p>
-                            </div>
-                        </div>
+                    <div class="hero-actions">
+                        <a href="#contact-section" class="button button-gold">
+                            BOOK DONKEY
+                        </a>
+
+                        <a href="#live-performance" class="button button-outline" id="watch-set">
+                            WATCH A SET
+                            <span aria-hidden="true">↗</span>
+                        </a>
                     </div>
 
-                    <!-- Card 02: CHINA -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="tour-card">
-                            <div class="d-flex justify-content-between align-items-start z-1">
-                                <span class="card-number">02</span>
-                                <span class="card-code fw-bold">CN</span>
-                            </div>
-                            <div class="z-1">
-                                <h3 class="card-country fw-bold text-uppercase m-0">CHINA</h3>
-                                <p class="card-subtext text-uppercase m-0 mt-3">INTERNATIONAL PERFORMANCE</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 03: VIETNAM -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="tour-card">
-                            <div class="d-flex justify-content-between align-items-start z-1">
-                                <span class="card-number">03</span>
-                                <span class="card-code fw-bold">VN</span>
-                            </div>
-                            <div class="z-1">
-                                <h3 class="card-country fw-bold text-uppercase m-0">VIETNAM</h3>
-                                <p class="card-subtext text-uppercase m-0 mt-3">INTERNATIONAL PERFORMANCE</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 04: LAOS -->
-                    <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="tour-card">
-                            <div class="d-flex justify-content-between align-items-start z-1">
-                                <span class="card-number">04</span>
-                                <span class="card-code fw-bold">LA</span>
-                            </div>
-                            <div class="z-1">
-                                <h3 class="card-country fw-bold text-uppercase m-0">LAOS</h3>
-                                <p class="card-subtext text-uppercase m-0 mt-3">INTERNATIONAL PERFORMANCE</p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- ข้อความเล็กมุมขวาล่างใต้ Grid -->
-                <div class="d-flex justify-content-end pr-md-4">
-                    <p class="tracking-widest text-uppercase m-0" style="color: var(--brand-gold); font-size: 10px;">
-                        BANGKOK &rarr; ASIA <span style="color: rgba(255,255,255,0.3)">/</span> DJ GOBLIN
+                    <p class="render-status" id="render-status" role="status" aria-live="polite">
+                        PREPARING THE STAGE...
                     </p>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- ================= SECTION 2.1: MARQUEE ================= -->
-        <div class="marquee-section">
-            <div class="marquee-wrapper">
+            <!-- Section 1 -->
+            <section id="about" class="position-relative w-100 overflow-hidden d-flex flex-column"
+                style="background-color: #050505; min-height: 100vh;">
 
-                <!-- ชุดข้อความที่ 1 -->
-                <div class="marquee-content">
-                    <span class="marquee-text">POP DANCE</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIGH ENERGY EDITS</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIP-HOP</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">OPEN FORMAT</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">R&B</span>
-                    <span class="marquee-star">✦</span>
+                <div class="flex-grow-1 d-flex flex-column flex-lg-row position-relative">
+
+                    <div class="about-image-wrapper position-relative position-lg-absolute top-0 end-0 h-100 order-1 order-lg-2"
+                        style="z-index: 1;">
+
+                        <div class="position-absolute top-0 start-0 w-50 h-100 d-none d-lg-block"
+                            style="background: linear-gradient(to right, #050505 0%, rgba(5,5,5,0.8) 20%, transparent 100%); z-index: 2;">
+                        </div>
+
+                        <img src="assets/images/red_bg.png" alt="DJ Donkey" class="w-100 h-100"
+                            style="object-fit: cover; object-position: 50% 20%; transform: scale(1.00); transform-origin: center top;">
+
+                        <img src="assets/images/people.png" alt="DJ Donkey" class="about-person about-person-front">
+                    </div>
+
+                    <div class="container-fluid p-0 d-flex w-100 order-2 order-lg-1" style="z-index: 2;">
+                        <div
+                            class="col-12 col-lg-6 d-flex flex-column justify-content-center about-text-content position-relative z-3">
+
+                            <p class="fw-bold text-uppercase mb-3 about-subheading">
+                                About Donkey
+                            </p>
+
+                            <h2 class="text-uppercase text-white mb-4 about-main-heading" style="font-weight: 700;">
+                                ROOTED IN<br>
+                                HIP-HOP.<br>
+                                DRIVEN BY<br>
+                                THE CROWD.
+                            </h2>
+
+                            <p class="mb-0 about-body-text" style="font-weight: 300;">
+                                DJ DONKEY connects tracks, genres, and familiar hooks into high-energy sets shaped by
+                                the
+                                room. The approach is simple: stay connected to the crowd, keep the music moving, and
+                                make
+                                space for the unexpected.
+                            </p>
+
+                        </div>
+                    </div>
                 </div>
 
-                <!-- ชุดข้อความที่ 2 (Copy เหมือนชุดแรกเป๊ะ เพื่อให้วนลูปได้เนียนตาแบบ Seamless) -->
-                <div class="marquee-content">
-                    <span class="marquee-text">POP DANCE</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIGH ENERGY EDITS</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIP-HOP</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">OPEN FORMAT</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">R&B</span>
-                    <span class="marquee-star">✦</span>
-                </div>
+                <div class="marquee-bottom-bar">
+                    <div class="marquee-track">
+                        <div class="marquee-content">
+                            <span class="marquee-text">HIP-HOP</span>
 
-                <!-- ชุดข้อความที่ 3 (เผื่อไว้สำหรับจอ Ultra-wide จะได้ไม่มีพื้นที่แหว่ง) -->
-                <div class="marquee-content">
-                    <span class="marquee-text">POP DANCE</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIGH ENERGY EDITS</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">HIP-HOP</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">OPEN FORMAT</span>
-                    <span class="marquee-star">✦</span>
-                    <span class="marquee-text">R&B</span>
-                    <span class="marquee-star">✦</span>
-                </div>
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
 
-            </div>
+                            <span class="marquee-text">OPEN FORMAT</span>
+
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">R&B</span>
+
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">HIGH ENERGY EDITS</span>
+
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">POP</span>
+
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">POP DANCE</span>
+
+                            <a href="#" class="marquee-icon-link">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+                        </div>
+
+                        <div class="marquee-content" aria-hidden="true" inert>
+                            <span class="marquee-text">HIP-HOP</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">OPEN FORMAT</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">R&B</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">HIGH ENERGY EDITS</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">POP</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+
+                            <span class="marquee-text">POP DANCE</span>
+
+                            <a href="#" class="marquee-icon-link" tabindex="-1">
+                                <img src="assets/icons/head.svg" alt="" class="marquee-icon">
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <!-- ================= SECTION 3: LIVE PERFORMANCE ================= -->
-        <section id="performance" class="section-padding">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
+        <!-- ================= SECTION 2: LIVE PERFORMANCE ================= -->
+        <section id="live-performance" class="w-100"
+            style="background-color: #050505; padding-top: 120px; padding-bottom: 120px;">
+            <div class="container-fluid p-0" style="padding-left: 7% !important; padding-right: 7% !important;">
 
-                <!-- ส่วน Header (ข้อความด้านบน) -->
-                <div class="mb-5">
-                    <p class="fw-bold tracking-widest text-uppercase mb-3"
-                        style="color: var(--brand-gold); font-size: 12px;">
+                <div class="mb-5 text-center text-md-start">
+                    <p class="fw-bold text-uppercase mb-3 perf-subheading">
                         LIVE PERFORMANCE
                     </p>
-
-                    <h2 class="fw-bold text-white text-uppercase m-0 perf-heading">
-                        FEEL THE<br>
-                        ENERGY.
+                    <h2 class="text-uppercase text-white m-0 perf-heading" style="font-weight: 700;">
+                        PRESS PLAY.<br>
+                        FEEL THE ENERGY.
                     </h2>
                 </div>
 
-
-                <!-- ส่วน Grid วิดีโอ 3 คอลัมน์ -->
-                <div class="row g-2 g-md-3 mb-5 performance-grid">
-
-                    <!-- Video 1 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_1.mp4">
-                            </video>
-
-                            <!-- ไอคอนขวาบน -->
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 01</div>
-                        </div>
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
-
-                    <!-- Video 2 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_2.mp4">
-                            </video>
-
-                            <!-- ไอคอนขวาบน -->
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 02</div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
-
-                    <!-- Video 3 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_3.mp4">
-                            </video>
-
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 03</div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
-
-                    <!-- Video 4 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card border-top border-dark">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_4.mp4">
-                            </video>
-
-                            <!-- ไอคอนขวาบน -->
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 04</div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
-
-                    <!-- Video 5 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card border border-dark">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_5.mp4">
-                            </video>
-
-                            <!-- ไอคอนขวาบน -->
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 05</div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
-
-                    <!-- Video 6 -->
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="video-card border-top border-dark">
-                            <video loop playsinline class="custom-video">
-                                <source src="assets/video/video_6.mp4">
-                            </video>
-
-                            <!-- ไอคอนขวาบน -->
-                            <div class="top-right-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                            </div>
-
-                            <div class="bottom-left-badge">LIVE 06</div>
-                        </div>
+                    <div class="col-12 col-md-4">
+                        <div class="perf-placeholder-block"></div>
                     </div>
+                </div>
 
-                    <!-- ปุ่ม MORE ON YOUTUBE ด้านล่างซ้าย -->
-                    <div>
-                        <button
-                            class="btn btn-gold rounded-pill fw-bold tracking-widest text-uppercase px-4 py-2 d-inline-flex align-items-center gap-2 mt-3"
-                            style="font-size: 12px;">
-                            MORE ON YOUTUBE
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: GALLERY (3D Carousel) ================= -->
+        <section id="gallery-section" class="w-100 overflow-hidden"
+            style="background-color: #050505; padding-top: 100px; padding-bottom: 100px;">
+
+            <div class="container-fluid p-0 d-flex flex-column flex-lg-row align-items-center"
+                style="padding-left: 7% !important; padding-right: 7% !important;">
+
+                <div
+                    class="gallery-text-content col-12 col-lg-4 mb-5 mb-lg-0 pe-lg-4 position-relative z-3 text-center text-lg-start">
+                    <p class="fw-bold text-uppercase mb-3 gallery-subheading">
+                        GALLERY
+                    </p>
+                    <h2 class="text-uppercase text-white mb-4 gallery-heading" style="font-weight: 700;">
+                        BEYOND<br>THE DECKS.
+                    </h2>
+
+                    <div class="d-flex gap-3 align-items-center justify-content-center justify-content-lg-start mt-4">
+                        <button id="btnPrevGal" class="gallery-nav-btn" aria-label="Previous">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </button>
+                        <button id="btnNextGal" class="gallery-nav-btn" aria-label="Next">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
                         </button>
                     </div>
+                </div>
 
+                <div class="col-12 col-lg-8 gallery-carousel-wrapper mt-4 mt-lg-0">
+                    <div class="gallery-track">
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_1.png" alt="img_1"></div>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_2.png" alt="img_2"></div>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_3.png" alt="img_3"></div>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_4.png" alt="img_4"></div>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_5.png" alt="img_5"></div>
+                        </div>
+                        <div class="gallery-card">
+                            <div class="gallery-placeholder"><img src="assets/images/img_6.png" alt="img_6"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 4: SELECTED VISUALS ================= -->
-        <section id="gallery" class="section-padding">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
+        <!-- ================= SECTION 4: BOOKING & CONTACT ================= -->
+        <section id="contact-section" class="w-100 d-flex align-items-center justify-content-center"
+            style="background-color: #050505; min-height: 100vh;">
 
-                <!-- Header ส่วนหัว -->
-                <div class="mb-5">
-                    <p class="fw-bold tracking-widest text-uppercase mb-3"
-                        style="color: var(--brand-gold); font-size: 12px;">
-                        SELECTED VISUALS
-                    </p>
-                    <h2 class="fw-bold text-white text-uppercase m-0 gallery-heading">
-                        GOBLIN<br>
-                        IN MOTION.
-                    </h2>
-                </div>
+            <div class="container text-center px-4">
 
-                <!-- Main Gallery Grid -->
-                <div class="gallery-layout">
+                <p class="fw-bold text-uppercase mb-3 contact-subheading">
+                    BOOKING & CONTACT
+                </p>
 
-                    <!-- ฝั่งซ้าย: รูปใหญ่ (Featured Image) -->
-                    <div class="gallery-item gallery-item-large">
-                        <img class="img-fluid" src="assets/images/img_3.png" style="object-position: center 35%;"
-                            alt="Goblin Visual Large">
-                    </div>
+                <h2 class="text-uppercase text-white mb-4 mb-md-5 contact-heading" style="font-weight: 700;">
+                    SET THE DATE.<br>
+                    LET'S MAKE IT LOUD.
+                </h2>
 
-                    <!-- ฝั่งขวา: ตาราง 2x2 (4 รูปเล็ก) -->
-                    <div class="gallery-right-grid">
-
-                        <!-- รูปที่ 1 (ขวาบน-ซ้าย) -->
-                        <div class="gallery-item">
-                            <img class="img-fluid" src="assets/images/img_4.png" alt="Goblin Visual 1"
-                                style="object-position: center 35%;">
-                        </div>
-
-                        <!-- รูปที่ 2 (ขวาบน-ขวา) -->
-                        <div class=" gallery-item">
-                            <img class="img-fluid" src="assets/images/img_5.png" alt="Goblin Visual 2"
-                                style="object-position: center 10%;">
-                        </div>
-
-                        <!-- รูปที่ 3 (ขวาล่าง-ซ้าย) -->
-                        <div class="gallery-item">
-                            <img class="img-fluid" src="assets/images/img_6.png" alt="Goblin Visual 3"
-                                style="object-position: center 35%;">
-                        </div>
-
-                        <!-- รูปที่ 4 (ขวาล่าง-ขวา) -->
-                        <div class="gallery-item">
-                            <img class="img-fluid" src="assets/images/img_7.png" alt="Goblin Visual 4"
-                                style="object-position: center 10%;">
-                        </div>
-
-                    </div>
-
+                <div
+                    class="d-flex justify-content-center gap-3 gap-md-4 flex-column flex-sm-row align-items-center mt-2">
+                    <a href="#" class="contact-btn btn-solid w-100 w-sm-auto">
+                        INSTAGRAM
+                    </a>
+                    <a href="#" class="contact-btn btn-outline w-100 w-sm-auto">
+                        YOUTUBE
+                    </a>
                 </div>
 
             </div>
         </section>
-
-        <!-- ================= SECTION 5: BOOKING & CONTACT ================= -->
-        <section id="booking" class="section-padding text-center">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
-                <div class="container-fluid p-0">
-
-                    <!-- Overline -->
-                    <p class="fw-bold tracking-widest text-uppercase mb-3"
-                        style="color: var(--brand-gold); font-size: 11px;">
-                        BOOKING & CONTACT
-                    </p>
-
-                    <!-- Heading หลัก -->
-                    <h2 class="fw-bold text-white text-uppercase mb-5 booking-heading mx-auto"
-                        style="max-width: 900px;">
-                        BRING GOBLIN<br>
-                        TO YOUR CITY.
-                    </h2>
-
-                    <!-- กลุ่มปุ่มกด CTA (Center Aligned) -->
-                    <div
-                        class="booking-actions d-flex flex-column flex-sm-row flex-wrap justify-content-center align-items-stretch align-items-sm-center gap-3">
-
-                        <!-- ปุ่ม 1: Primary (สีทอง) -->
-                        <a href="#"
-                            class="btn btn-gold rounded-pill fw-bold tracking-widest text-uppercase px-4 py-2 d-inline-flex align-items-center gap-2"
-                            style="font-size: 10px;">
-                            BOOKING &mdash; INSTAGRAM
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </a>
-
-                        <!-- ปุ่ม 2: Outline (YOUTUBE) -->
-                        <a href="#"
-                            class="btn btn-outline-custom rounded-pill fw-bold tracking-widest text-uppercase px-4 py-2 d-inline-flex align-items-center gap-2"
-                            style="font-size: 10px;">
-                            YOUTUBE
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </a>
-
-                        <!-- ปุ่ม 3: Outline (TIKTOK) -->
-                        <a href="#"
-                            class="btn btn-outline-custom rounded-pill fw-bold tracking-widest text-uppercase px-4 py-2 d-inline-flex align-items-center gap-2"
-                            style="font-size: 10px;">
-                            TIKTOK
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="7" y1="17" x2="17" y2="7"></line>
-                                <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
-                        </a>
-
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= FOOTER ================= -->
-        <footer class="site-footer">
-            <div class="container-xxl px-3 px-sm-4 px-lg-5">
-                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
-
-                    <!-- ฝั่งซ้าย: Copyright -->
-                    <p class="footer-text text-uppercase m-0">
-                        &copy; 2026 DJ GOBLIN
-                    </p>
-
-                    <!-- ฝั่งขวา: Location / Status -->
-                    <p class="footer-text text-uppercase m-0">
-                        BANGKOK, THAILAND
-                    </p>
-
-                </div>
-            </div>
-        </footer>
 
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    </script>
     <script src="assets/js/index.js"></script>
+    <script src="assets/js/section_1.js"></script>
+    <script src="assets/js/section_3.js"></script>
 </body>
 
 </html>

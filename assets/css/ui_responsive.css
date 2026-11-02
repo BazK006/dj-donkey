@@ -1,21 +1,41 @@
-/* สำหรับปุ่มบนมือถือ ให้ขยายเต็มความกว้าง */
-.w-sm-auto {
-    width: auto !important;
-}
-
-@media (max-width: 575.98px) {
-    .w-sm-auto {
-        width: 100% !important;
-    }
-}
-
-/* สำหรับปุ่มวิดีโอบนแท็บเล็ต/หน้าจอใหญ่ */
-.w-md-auto {
+/* =========================================
+   Responsive Width Utilities (Mobile-First Approach)
+   รองรับตั้งแต่หน้าจอมือถือ ไปจนถึง Desktop
+========================================= */
+.w-sm-auto,
+.w-md-auto,
+.w-lg-auto,
+.w-xl-auto,
+.w-xxl-auto {
     width: 100% !important;
+}
+
+@media (min-width: 576px) {
+    .w-sm-auto {
+        width: auto !important;
+    }
 }
 
 @media (min-width: 768px) {
     .w-md-auto {
+        width: auto !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .w-lg-auto {
+        width: auto !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .w-xl-auto {
+        width: auto !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .w-xxl-auto {
         width: auto !important;
     }
 }

@@ -1,78 +1,281 @@
 /* =========================================
-   Section: Live Performance (Video Grid)
+    Section 3: Gallery (3D Overlap) - 
+    ปรับภาพกลางเด่นสุด
 ========================================= */
-
-/* 1. Structure & Typography */
-#performance {
-    background-color: var(--brand-darkbg);
-    padding-top: 100px;
-    padding-bottom: 100px;
+#gallery-section {
+    font-family: "Inter", sans-serif;
 }
 
-.perf-heading {
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
-    line-height: 0.85;
+.gallery-subheading {
+    color: var(--brand-gold, #D6A857);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+}
+
+.gallery-heading {
+    font-size: clamp(3.5rem, 5.5vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.02;
     letter-spacing: -0.02em;
+    text-align: left;
 }
 
-/* 2. Video Card Container */
-.video-card {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    background-color: #000000;
+.gallery-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
 }
 
-/* 3. Media Elements (Video & Image Overlay) */
-.custom-video,
-.video-card img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease, filter 0.4s ease;
+.gallery-nav-btn:hover {
+    background-color: var(--brand-gold, #D6A857);
+    border-color: var(--brand-gold, #D6A857);
+    color: #000000;
+    transform: scale(1.05);
 }
 
-.video-card:hover .custom-video,
-.video-card:hover img {
-    transform: scale(1.03);
-    /* ซูมเบาๆ ตอน Hover ให้ดูมีมิติ */
-}
-
-/* 4. Badges (มุมขวาบน & มุมล่างซ้าย) */
-.top-right-badge,
-.bottom-left-badge {
-    position: absolute;
-    z-index: 2;
-    pointer-events: none;
-    /* คลิกทะลุไปโดนตัววิดีโอเพื่อสั่ง เล่น/หยุด ได้ */
-}
-
-/* ป้ายมุมขวาบน (ไอคอน) */
-.top-right-badge {
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-    background-color: rgba(0, 0, 0, 0.6);
+.gallery-carousel-wrapper {
+    position: relative;
+    height: 75vh;
+    min-height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* ป้ายมุมล่างซ้าย (ลำดับวิดีโอ LIVE 04) */
-.bottom-left-badge {
-    bottom: 16px;
-    left: 16px;
-    background-color: #000000;
-    padding: 4px 8px;
-    font-size: 9px;
-    font-weight: 600;
+.gallery-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+}
+
+.gallery-track:active {
+    cursor: grabbing;
+}
+
+/* ---------------------------------------------------
+   ตั้งค่าขนาดไพ่ (ฐานกว้าง 300px เท่าเดิม)
+---------------------------------------------------- */
+.gallery-card {
+    position: absolute;
+    width: 300px;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    z-index: 0;
+    transform: scale(0.5) translateX(0);
+    pointer-events: none;
+}
+
+.gallery-card.active {
+    opacity: 1;
+    z-index: 3;
+    transform: scale(1.35) translateX(0);
+    filter: blur(0) brightness(1);
+    pointer-events: auto;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+.gallery-card.prev {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(0.85) translateX(-95%);
+    filter: blur(4px) brightness(0.5);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.gallery-card.next {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(0.85) translateX(95%);
+    filter: blur(4px) brightness(0.5);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.gallery-card.prev-2 {
+    opacity: 1;
+    z-index: 1;
+    transform: scale(0.6) translateX(-170%);
+    filter: blur(8px) brightness(0.2);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.gallery-card.next-2 {
+    opacity: 1;
+    z-index: 1;
+    transform: scale(0.6) translateX(170%);
+    filter: blur(8px) brightness(0.2);
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------
+   คลาสสำคัญสำหรับกล่องใส่รูป (Placeholder)
+---------------------------------------------------- */
+.gallery-placeholder {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.gallery-placeholder img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.placeholder-text {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.2rem;
+    font-weight: 700;
     letter-spacing: 0.1em;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================
+   GALLERY POSITION FIX
+   Keep Gallery below Fixed Header
+========================================= */
+
+/* Section Spacing */
+#gallery-section {
+    padding-top: clamp(150px, 17vh, 190px) !important;
+    padding-bottom: clamp(80px, 10vh, 110px) !important;
+
+    scroll-margin-top: 100px;
+}
+
+/* Carousel Area */
+#gallery-section .gallery-carousel-wrapper {
+    height: 68vh;
+    min-height: 500px;
+}
+
+/* Limit Image Height */
+#gallery-section .gallery-placeholder {
+    width: 100%;
+    height: min(58vh, 560px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gallery-section .gallery-placeholder img {
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+}
+
+/* Center Image */
+#gallery-section .gallery-card.active {
+    transform: scale(1.18) translateX(0);
+}
+
+
+/* =========================================
+   TABLET & MOBILE
+========================================= */
+
+@media (max-width: 991.98px) {
+
+    #gallery-section {
+        padding-top: clamp(125px, 16vh, 155px) !important;
+        padding-bottom: 80px !important;
+    }
+
+    #gallery-section .gallery-carousel-wrapper {
+        height: 52vh;
+        min-height: 390px;
+        margin-top: 2rem;
+    }
+
+    #gallery-section .gallery-placeholder {
+        height: min(44vh, 420px);
+    }
+
+    #gallery-section .gallery-card.active {
+        transform: scale(1.08) translateX(0);
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 575.98px) {
+
+    #gallery-section {
+        padding-top: 125px !important;
+        padding-bottom: 70px !important;
+    }
+
+    #gallery-section .gallery-carousel-wrapper {
+        height: 45vh;
+        min-height: 340px;
+    }
+
+    #gallery-section .gallery-placeholder {
+        height: min(40vh, 360px);
+    }
+}
+
+
+/* ---------------------------------------------------
+   Responsive - มือถือและแท็บเล็ต
+---------------------------------------------------- */
+@media (max-width: 991.98px) {
+    .gallery-carousel-wrapper {
+        height: 50vh;
+        margin-top: 3rem;
+    }
+
+    .gallery-card {
+        width: 180px;
+    }
+
+    .gallery-card.active {
+        transform: scale(1.15) translateX(0);
+    }
+
+    .gallery-card.prev {
+        transform: scale(0.9) translateX(-75%);
+    }
+
+    .gallery-card.next {
+        transform: scale(0.9) translateX(75%);
+    }
+
+    .gallery-card.prev-2 {
+        transform: scale(0.7) translateX(-140%);
+    }
+
+    .gallery-card.next-2 {
+        transform: scale(0.7) translateX(140%);
+    }
 }
