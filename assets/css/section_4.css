@@ -37,7 +37,7 @@
 
 .btn-solid {
     background-color: var(--brand-gold, #D6A857);
-    color: #FFFFFF;
+    color: #080808;
     border: 1px solid var(--brand-gold, #D6A857);
 }
 

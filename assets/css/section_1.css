@@ -2,7 +2,7 @@
    01. ABOUT SECTION
 ========================================= */
 
-#about {
+#about.about-section {
     position: relative;
 
     display: flex;
@@ -10,6 +10,7 @@
 
     width: 100%;
     min-height: 100vh;
+    min-height: 100svh;
 
     margin: 0;
     padding: 0;
@@ -22,8 +23,11 @@
 }
 
 
-/* Main About Layout */
-#about>.flex-grow-1 {
+/* =========================================
+   02. MAIN LAYOUT
+========================================= */
+
+#about .about-layout {
     position: relative;
 
     display: flex;
@@ -31,12 +35,20 @@
 
     width: 100%;
     min-height: calc(100vh - 52px);
+    min-height: calc(100svh - 52px);
 }
 
 
 /* =========================================
-   02. ABOUT CONTENT
+   03. ABOUT CONTENT
 ========================================= */
+
+.about-content-layer {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+}
 
 .about-text-content {
     padding-left: 7% !important;
@@ -44,7 +56,7 @@
 }
 
 .about-subheading {
-    color: var(--brand-gold, #D6A857);
+    color: #D6A857;
 
     font-size: 0.95rem;
     font-weight: 700;
@@ -53,49 +65,53 @@
 }
 
 .about-main-heading {
+    color: #FFFFFF;
+
     font-size: clamp(3.2rem, 5.2vw, 6rem);
 
-    font-weight: 900;
+    font-weight: 700;
     line-height: 1.02;
 
     letter-spacing: -0.03em;
 }
 
 .about-body-text {
+    max-width: 480px;
+
     color: #E0E0E0;
 
     font-size: 1.1rem;
+    font-weight: 300;
     line-height: 1.6;
-
-    max-width: 480px;
-
-    font-weight: 500;
 }
 
 
 /* =========================================
-   03. IMAGE WRAPPER
-   RED BACKGROUND + PORTRAIT
+   04. IMAGE WRAPPER
 ========================================= */
 
 .about-image-wrapper {
     position: relative;
 
-    width: 100% !important;
+    width: 100%;
     height: 50vh;
+
+    flex: 0 0 auto;
 
     overflow: hidden;
     isolation: isolate;
 
     background-color: #B51222;
+
+    z-index: 1;
 }
 
 
 /* =========================================
-   04. RED BACKGROUND IMAGE
+   05. BACKGROUND IMAGE
 ========================================= */
 
-.about-image-wrapper>img.w-100.h-100 {
+.about-background-image {
     position: absolute;
 
     inset: 0;
@@ -115,7 +131,7 @@
 
 
 /* =========================================
-   05. PORTRAIT BASE
+   06. PORTRAIT BASE
 ========================================= */
 
 .about-person {
@@ -139,8 +155,7 @@
 
 
 /* =========================================
-   06. BACK PORTRAIT
-   Optional
+   07. BACK PORTRAIT
 ========================================= */
 
 .about-person-back {
@@ -158,21 +173,19 @@
 
 
 /* =========================================
-   07. FRONT PORTRAIT
-   KEEP YOUR PREFERRED DESIGN
+   08. FRONT PORTRAIT
 ========================================= */
 
 .about-image-wrapper .about-person-front {
     position: absolute;
 
     right: 1%;
+    bottom: -55%;
 
     width: auto;
     height: 185%;
 
     max-width: 90%;
-
-    bottom: -55%;
 
     z-index: 2;
 
@@ -184,30 +197,35 @@
 
 
 /* =========================================
-   08. IMAGE GRADIENT
+   09. IMAGE GRADIENT
 ========================================= */
 
-.about-image-wrapper>.position-absolute {
+.about-image-gradient {
+    z-index: 3;
+
     pointer-events: none;
+
+    background: linear-gradient(to right,
+            #050505 0%,
+            rgba(5, 5, 5, 0.8) 20%,
+            transparent 100%);
 }
 
 
 /* =========================================
-   09. IMAGE POSITION UTILITY
+   10. MARQUEE CONTAINER
 ========================================= */
-
-.position-lg-absolute {
-    position: relative !important;
-
-    width: 100% !important;
-    height: 50vh !important;
-}
 
 .marquee-bottom-bar {
     --marquee-gap: 1.1rem;
 
     position: relative;
+
+    display: flex;
+    align-items: center;
+
     flex: 0 0 52px;
+
     width: 100%;
     height: 52px;
 
@@ -222,9 +240,15 @@
     white-space: nowrap;
 }
 
+
+/* =========================================
+   11. MARQUEE TRACK
+========================================= */
+
 .marquee-track {
     display: flex;
     align-items: center;
+
     flex-wrap: nowrap;
 
     width: max-content;
@@ -233,69 +257,107 @@
     gap: 0;
 
     animation: scrollMarquee 25s linear infinite;
+
     will-change: transform;
 }
+
+
+/* =========================================
+   12. MARQUEE LOOP GROUP
+========================================= */
 
 .marquee-loop-group {
     display: flex;
     align-items: center;
+
     flex-wrap: nowrap;
 
     flex: 0 0 auto;
+
     width: max-content;
 
     gap: var(--marquee-gap);
 
-    /* เพิ่มพื้นที่ว่างตรงรอยต่อของ Loop */
     padding-right: var(--marquee-gap);
+
     box-sizing: content-box;
 }
+
+
+/* =========================================
+   13. MARQUEE CONTENT
+========================================= */
 
 .marquee-content {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
     flex-wrap: nowrap;
 
     flex: 0 0 auto;
+
     width: max-content;
     min-width: 0;
 
     gap: var(--marquee-gap);
 
     padding: 0;
-    white-space: nowrap;
+
     box-sizing: border-box;
+
+    white-space: nowrap;
 }
+
+
+/* =========================================
+   14. MARQUEE TEXT
+========================================= */
 
 .marquee-text {
     display: inline-flex;
     align-items: center;
+
     flex-shrink: 0;
 
     margin: 0;
     padding: 0;
 
-    color: #fff;
+    color: #FFFFFF;
+
     font-size: 0.95rem;
     font-weight: 800;
+
     line-height: 1;
     letter-spacing: 0.05em;
+
     text-transform: uppercase;
 }
 
+
+/* =========================================
+   15. MARQUEE ICON WRAPPER
+========================================= */
+
 .marquee-icon-wrap {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
     flex: 0 0 24px;
+
     width: 24px;
     height: 24px;
 
     margin: 0;
     padding: 0;
 }
+
+
+/* =========================================
+   16. MARQUEE ICON
+========================================= */
 
 .marquee-icon {
     display: block;
@@ -318,46 +380,25 @@
     transform: scale(1.15);
 }
 
+
+/* =========================================
+   17. MARQUEE ANIMATION
+========================================= */
+
 @keyframes scrollMarquee {
+
     from {
         transform: translate3d(0, 0, 0);
     }
 
     to {
-        transform: translate3d(var(--marquee-offset), 0, 0);
+        transform: translate3d(var(--marquee-offset),
+                0,
+                0);
     }
+
 }
 
-@media (max-width: 767.98px) {
-    .marquee-bottom-bar {
-        --marquee-gap: 0.85rem;
-
-        flex-basis: 46px;
-        height: 46px;
-    }
-
-    .marquee-text {
-        font-size: 0.85rem;
-    }
-
-    .marquee-icon-wrap {
-        flex-basis: 22px;
-        width: 22px;
-        height: 22px;
-    }
-
-    .marquee-icon {
-        width: 19px;
-        height: 19px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .marquee-track {
-        animation: none;
-        transform: none;
-    }
-}
 
 /* =========================================
    18. DESKTOP
@@ -366,17 +407,20 @@
 
 @media (min-width: 992px) {
 
-    #about {
+    #about.about-section {
         min-height: 100vh;
+        min-height: 100svh;
     }
 
+    #about .about-layout {
+        flex-direction: row;
 
-    #about>.flex-grow-1 {
         min-height: calc(100vh - 52px);
+        min-height: calc(100svh - 52px);
     }
 
+    /* Right Side Image */
 
-    /* Image Wrapper */
     .about-image-wrapper.position-lg-absolute {
         position: absolute !important;
 
@@ -389,28 +433,25 @@
         height: auto !important;
     }
 
+    /* Left Side Content */
 
-    /* About Text */
+    .about-content-layer {
+        width: 100%;
+    }
+
     .about-text-content {
         padding-left: 7% !important;
         padding-right: 5%;
     }
 
+    /* Preserve Original Portrait Position */
 
-    /* Front Portrait - Preferred Position */
     .about-image-wrapper .about-person-front {
         right: 1%;
+        bottom: -55%;
 
         height: 185%;
         max-width: 90%;
-
-        bottom: -55%;
-    }
-
-
-    /* Background Overlay */
-    .about-image-wrapper>.position-absolute {
-        z-index: 3;
     }
 
 }
@@ -423,19 +464,44 @@
 
 @media (min-width: 768px) and (max-width: 991.98px) {
 
-    #about {
+    #about.about-section {
         min-height: auto;
     }
 
-
-    #about>.flex-grow-1 {
-        min-height: 0;
-
+    #about .about-layout {
         flex-direction: column;
+
+        min-height: 0;
     }
 
+    /* Content First */
 
-    /* Image */
+    .about-content-layer {
+        order: 1;
+
+        width: 100%;
+    }
+
+    .about-text-content {
+        padding: 3.5rem 5% !important;
+    }
+
+    .about-subheading {
+        font-size: 0.95rem;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.8rem, 7vw, 4.8rem);
+    }
+
+    .about-body-text {
+        max-width: 620px;
+
+        font-size: 1.05rem;
+    }
+
+    /* Image Below Content */
+
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
@@ -444,58 +510,27 @@
         bottom: auto !important;
         left: auto !important;
 
-        width: 100% !important;
+        order: 2;
 
+        width: 100% !important;
         height: clamp(380px, 55vw, 540px) !important;
 
-        min-height: 0;
+        flex: 0 0 auto;
     }
 
-
-    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 2%;
+        bottom: -45%;
 
         height: 155%;
         max-width: 95%;
-
-        bottom: -45%;
     }
 
-
-    /* Back Portrait */
     .about-person-back {
         right: 1%;
 
         height: 82%;
         max-width: 58%;
-    }
-
-
-    /* About Text */
-    .about-text-content {
-        padding: 3.5rem 5% !important;
-    }
-
-
-    .about-main-heading {
-        font-size: clamp(2.8rem, 7vw, 4.8rem);
-    }
-
-
-    .about-body-text {
-        font-size: 1.05rem;
-
-        max-width: 620px;
-    }
-
-
-    /* Gradient */
-    .about-image-wrapper>.position-absolute {
-        background: linear-gradient(to top,
-                #050505 0%,
-                rgba(5, 5, 5, 0.2) 18%,
-                transparent 55%) !important;
     }
 
 }
@@ -508,17 +543,43 @@
 
 @media (min-width: 576px) and (max-width: 767.98px) {
 
-    #about {
+    #about.about-section {
         min-height: auto;
     }
 
+    #about .about-layout {
+        flex-direction: column;
 
-    #about>.flex-grow-1 {
         min-height: 0;
     }
 
+    /* Content First */
 
-    /* Image */
+    .about-content-layer {
+        order: 1;
+    }
+
+    .about-text-content {
+        padding: 3rem 1.75rem !important;
+    }
+
+    .about-subheading {
+        font-size: 0.9rem;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.7rem, 7.5vw, 4rem);
+    }
+
+    .about-body-text {
+        max-width: 560px;
+
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Image Below Content */
+
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
@@ -527,55 +588,27 @@
         bottom: auto !important;
         left: auto !important;
 
-        width: 100% !important;
+        order: 2;
 
+        width: 100% !important;
         height: clamp(340px, 65vw, 440px) !important;
+
+        flex: 0 0 auto;
     }
 
-
-    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 1%;
+        bottom: -43%;
 
         height: 148%;
         max-width: 100%;
-
-        bottom: -43%;
     }
 
-
-    /* Back Portrait */
     .about-person-back {
         right: 0;
 
         height: 82%;
         max-width: 60%;
-    }
-
-
-    /* Text */
-    .about-text-content {
-        padding: 3.5rem 1.75rem !important;
-    }
-
-
-    .about-main-heading {
-        font-size: clamp(2.7rem, 7.5vw, 4rem);
-    }
-
-
-    .about-body-text {
-        font-size: 1rem;
-        max-width: 560px;
-    }
-
-
-    /* Gradient */
-    .about-image-wrapper>.position-absolute {
-        background: linear-gradient(to top,
-                #050505 0%,
-                rgba(5, 5, 5, 0.2) 18%,
-                transparent 55%) !important;
     }
 
 }
@@ -588,17 +621,43 @@
 
 @media (min-width: 376px) and (max-width: 575.98px) {
 
-    #about {
+    #about.about-section {
         min-height: auto;
     }
 
+    #about .about-layout {
+        flex-direction: column;
 
-    #about>.flex-grow-1 {
         min-height: 0;
     }
 
+    /* Content First */
 
-    /* Image */
+    .about-content-layer {
+        order: 1;
+    }
+
+    .about-text-content {
+        padding: 3rem 1.5rem !important;
+    }
+
+    .about-subheading {
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.35rem, 9vw, 3.4rem);
+        line-height: 1.04;
+    }
+
+    .about-body-text {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Image Below Content */
+
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
@@ -607,60 +666,27 @@
         bottom: auto !important;
         left: auto !important;
 
-        width: 100% !important;
+        order: 2;
 
+        width: 100% !important;
         height: clamp(300px, 78vw, 420px) !important;
+
+        flex: 0 0 auto;
     }
 
-
-    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 0%;
+        bottom: -40%;
 
         height: 140%;
         max-width: 100%;
-
-        bottom: -40%;
     }
 
-
-    /* Back Portrait */
     .about-person-back {
         right: 0;
 
         height: 80%;
         max-width: 60%;
-    }
-
-
-    /* Text */
-    .about-text-content {
-        padding: 3rem 1.5rem !important;
-    }
-
-
-    .about-subheading {
-        font-size: 0.85rem;
-    }
-
-
-    .about-main-heading {
-        font-size: clamp(2.35rem, 9vw, 3.4rem);
-    }
-
-
-    .about-body-text {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-
-    /* Gradient */
-    .about-image-wrapper>.position-absolute {
-        background: linear-gradient(to top,
-                #050505 0%,
-                rgba(5, 5, 5, 0.18) 15%,
-                transparent 55%) !important;
     }
 
 }
@@ -673,17 +699,43 @@
 
 @media (max-width: 375px) {
 
-    #about {
+    #about.about-section {
         min-height: auto;
     }
 
+    #about .about-layout {
+        flex-direction: column;
 
-    #about>.flex-grow-1 {
         min-height: 0;
     }
 
+    /* Content First */
 
-    /* Image */
+    .about-content-layer {
+        order: 1;
+    }
+
+    .about-text-content {
+        padding: 2.5rem 1.25rem !important;
+    }
+
+    .about-subheading {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+    }
+
+    .about-main-heading {
+        font-size: clamp(2.2rem, 9.5vw, 2.8rem);
+        line-height: 1.04;
+    }
+
+    .about-body-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* Image Below Content */
+
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
@@ -692,64 +744,29 @@
         bottom: auto !important;
         left: auto !important;
 
-        width: 100% !important;
+        order: 2;
 
+        width: 100% !important;
         height: 300px !important;
 
         min-height: 300px;
+
+        flex: 0 0 auto;
     }
 
-
-    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: -2%;
+        bottom: -38%;
 
         height: 135%;
         max-width: 105%;
-
-        bottom: -38%;
     }
 
-
-    /* Back Portrait */
     .about-person-back {
         right: -1%;
 
         height: 78%;
         max-width: 58%;
-    }
-
-
-    /* Text */
-    .about-text-content {
-        padding: 2.5rem 1.25rem !important;
-    }
-
-
-    .about-subheading {
-        font-size: 0.8rem;
-        letter-spacing: 0.12em;
-    }
-
-
-    .about-main-heading {
-        font-size: clamp(2.2rem, 9.5vw, 2.8rem);
-        line-height: 1.04;
-    }
-
-
-    .about-body-text {
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-
-    /* Gradient */
-    .about-image-wrapper>.position-absolute {
-        background: linear-gradient(to top,
-                #050505 0%,
-                rgba(5, 5, 5, 0.15) 15%,
-                transparent 55%) !important;
     }
 
 }
@@ -762,31 +779,31 @@
 @media (max-width: 767.98px) {
 
     .marquee-bottom-bar {
+        --marquee-gap: 0.85rem;
+
         flex-basis: 46px;
 
         height: 46px;
     }
 
-
     .marquee-track {
         animation-duration: 22s;
     }
-
-
-    .marquee-content,
-    .marquee-loop-group {
-        gap: 0.7rem;
-    }
-
 
     .marquee-text {
         font-size: 0.85rem;
     }
 
+    .marquee-icon-wrap {
+        flex-basis: 22px;
+
+        width: 22px;
+        height: 22px;
+    }
 
     .marquee-icon {
-        width: 18px;
-        height: 18px;
+        width: 19px;
+        height: 19px;
     }
 
 }
@@ -802,6 +819,12 @@
         font-size: 0.8rem;
     }
 
+    .marquee-icon-wrap {
+        flex-basis: 20px;
+
+        width: 20px;
+        height: 20px;
+    }
 
     .marquee-icon {
         width: 16px;
@@ -814,14 +837,12 @@
 /* =========================================
    25. ACCESSIBILITY
 ========================================= */
-
 @media (prefers-reduced-motion: reduce) {
 
     .marquee-track {
         animation: none;
         transform: none;
     }
-
 
     .marquee-icon,
     .about-person {
