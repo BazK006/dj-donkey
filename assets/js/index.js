@@ -1,87 +1,202 @@
 
+const SITE_CONFIG = {
+    bookingUrl: '',
+    bookingLabel: 'Get in touch',
+    setVideoUrl: '',
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.site-header');
+    const navigation = document.querySelector('#mainNavigation');
+    const watchSetButton = document.querySelector('#watch-set');
     const videoCards = document.querySelectorAll('.video-card');
-    videoCards.forEach(card => {
+
+    const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+    );
+
+    const SCROLL_GAP = 12;
+
+    if (!header) {
+        console.warn('DONKEY UI: Header not found.');
+    }
+
+    // =========================================
+    // SCROLL NAVIGATION
+    // =========================================
+
+    function scrollToSection(targetSection) {
+        if (!targetSection) return;
+
+        const headerBottom = header
+            ? Math.max(0, header.getBoundingClientRect().bottom)
+            : 0;
+
+        const targetPosition =
+            window.scrollY +
+            targetSection.getBoundingClientRect().top -
+            headerBottom -
+            SCROLL_GAP;
+
+        window.scrollTo({
+            top: Math.max(0, targetPosition),
+            behavior: reduceMotion.matches ? 'auto' : 'smooth',
+        });
+    }
+
+    function getTargetFromLink(link) {
+        const targetId =
+            link.getAttribute('data-target') ||
+            link.getAttribute('href');
+
+        if (!targetId || !targetId.startsWith('#')) {
+            return null;
+        }
+
+        return document.getElementById(targetId.slice(1));
+    }
+
+    // =========================================
+    // MOBILE NAVIGATION
+    // =========================================
+
+    function closeMobileMenu(callback) {
+        if (!navigation || !navigation.classList.contains('show')) {
+            requestAnimationFrame(callback);
+            return;
+        }
+
+        const Collapse = window.bootstrap?.Collapse;
+
+        if (!Collapse) {
+            requestAnimationFrame(callback);
+            return;
+        }
+
+        navigation.addEventListener(
+            'hidden.bs.collapse',
+            () => {
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(callback);
+                });
+            },
+            { once: true }
+        );
+
+        Collapse.getOrCreateInstance(
+            navigation,
+            { toggle: false }
+        ).hide();
+    }
+
+    // =========================================
+    // NAVIGATION CLICK
+    // =========================================
+
+    document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) return;
+
+        if (
+            event.button !== 0 ||
+            event.ctrlKey ||
+            event.metaKey ||
+            event.shiftKey ||
+            event.altKey
+        ) {
+            return;
+        }
+
+        const link = event.target.closest('a[href^="#"]');
+
+        if (!link) return;
+
+        // WATCH A SET
+        if (link.id === 'watch-set' && SITE_CONFIG.setVideoUrl) {
+            event.preventDefault();
+            window.open(
+                SITE_CONFIG.setVideoUrl,
+                '_blank',
+                'noopener,noreferrer'
+            );
+            return;
+        }
+
+        const targetSection = getTargetFromLink(link);
+
+        if (!targetSection) return;
+
+        event.preventDefault();
+
+        const performScroll = () => {
+            scrollToSection(targetSection);
+
+            if (window.history?.replaceState) {
+                window.history.replaceState(
+                    null,
+                    '',
+                    `#${targetSection.id}`
+                );
+            }
+        };
+
+        if (navigation && navigation.contains(link)) {
+            closeMobileMenu(performScroll);
+        } else {
+            performScroll();
+        }
+    });
+
+    // =========================================
+    // VIDEO CARDS
+    // =========================================
+
+    videoCards.forEach((card) => {
         const video = card.querySelector('.custom-video');
 
         if (!video) return;
 
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (event) => {
+            if (
+                event.target instanceof Element &&
+                event.target.closest('a, button')
+            ) {
+                return;
+            }
 
             if (!video.paused) {
                 video.pause();
                 return;
             }
 
-            document.querySelectorAll('.custom-video').forEach(v => {
-                v.pause();
+            document.querySelectorAll('.custom-video').forEach((item) => {
+                if (item !== video) {
+                    item.pause();
+                }
             });
 
             video.muted = false;
 
-            video.play().catch(error => {
-                console.log('Video playback prevented:', error);
+            video.play().catch((error) => {
+                console.warn('Video playback prevented:', error);
             });
         });
     });
 
-    const navigation = document.getElementById('mainNavigation');
-    const navItems = document.querySelectorAll('.nav-link-item');
+    // =========================================
+    // BOOKING LINKS
+    // =========================================
 
-    const header = document.querySelector('.site-header')
-        || document.querySelector('header.fixed-top');
-
-    function scrollToSection(targetSection) {
-        const headerHeight = header
-            ? header.getBoundingClientRect().height
-            : 0;
-
-        const spacing = 16;
-
-        const targetPosition =
-            window.scrollY +
-            targetSection.getBoundingClientRect().top -
-            headerHeight -
-            spacing;
-
-        window.scrollTo({
-            top: Math.max(0, targetPosition),
-            behavior: 'smooth'
-        });
+    if (SITE_CONFIG.bookingUrl) {
+        document.querySelectorAll('[data-booking-link]')
+            .forEach((link) => {
+                link.href = SITE_CONFIG.bookingUrl;
+                link.textContent = `${SITE_CONFIG.bookingLabel} ↗`;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
     }
 
-    navItems.forEach(item => {
-        item.addEventListener('click', event => {
-
-            const targetId =
-                item.getAttribute('data-target') ||
-                item.getAttribute('href');
-
-            if (!targetId || !targetId.startsWith('#')) return;
-
-            const targetSection = document.getElementById(
-                targetId.substring(1)
-            );
-
-            if (!targetSection)
-                return;
-
-            event.preventDefault();
-            if (navigation && navigation.classList.contains('show')
-                && window.bootstrap?.Collapse) {
-                navigation.addEventListener(
-                    'hidden.bs.collapse',
-                    () => {
-                        scrollToSection(targetSection);
-                    },
-                    { once: true }
-                );
-                bootstrap.Collapse
-                    .getOrCreateInstance(navigation)
-                    .hide();
-            } else {
-                scrollToSection(targetSection);
-            }
-        });
-    });
+    console.info(
+        'DONKEY Portfolio UI initialized successfully.'
+    );
 });

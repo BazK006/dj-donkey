@@ -39,6 +39,7 @@ body {
     height: 42px;
     width: auto;
     object-fit: contain;
+    transform: translateY(-4px);
     transition: opacity 0.25s ease,
         transform 0.25s ease;
 }
