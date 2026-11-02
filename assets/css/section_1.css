@@ -1,22 +1,36 @@
 /* =========================================
-   DJ DONKEY - SECTION 1: ABOUT
-   HERO + PORTRAIT + INFINITE MARQUEE
-========================================= */
-
-
-/* =========================================
-   FONT
-========================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-
-/* =========================================
    01. ABOUT SECTION
 ========================================= */
 
 #about {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background-color: #050505;
+
     font-family: "Inter", sans-serif;
+}
+
+
+/* Main About Layout */
+#about>.flex-grow-1 {
+    position: relative;
+
+    display: flex;
+    flex: 1 1 auto;
+
+    width: 100%;
+    min-height: calc(100vh - 52px);
 }
 
 
@@ -31,78 +45,102 @@
 
 .about-subheading {
     color: var(--brand-gold, #D6A857);
+
     font-size: 0.95rem;
     font-weight: 700;
+
     letter-spacing: 0.15em;
 }
 
 .about-main-heading {
     font-size: clamp(3.2rem, 5.2vw, 6rem);
+
     font-weight: 900;
     line-height: 1.02;
+
     letter-spacing: -0.03em;
 }
 
 .about-body-text {
     color: #E0E0E0;
+
     font-size: 1.1rem;
     line-height: 1.6;
+
     max-width: 480px;
+
     font-weight: 500;
 }
 
 
 /* =========================================
-   03. HERO IMAGE WRAPPER
+   03. IMAGE WRAPPER
    RED BACKGROUND + PORTRAIT
 ========================================= */
 
 .about-image-wrapper {
     position: relative;
-    isolation: isolate;
-    overflow: hidden;
 
     width: 100% !important;
+    height: 50vh;
+
+    overflow: hidden;
+    isolation: isolate;
 
     background-color: #B51222;
 }
 
-/* Background Image: red_bg.png */
+
+/* =========================================
+   04. RED BACKGROUND IMAGE
+========================================= */
+
 .about-image-wrapper>img.w-100.h-100 {
+    position: absolute;
+
+    inset: 0;
+
     display: block;
 
     width: 100%;
     height: 100%;
 
+    max-width: none;
+
     object-fit: cover;
     object-position: 50% 20%;
+
+    z-index: 0;
 }
 
 
 /* =========================================
-   04. PORTRAIT BASE
+   05. PORTRAIT BASE
 ========================================= */
 
 .about-person {
     position: absolute;
+
     bottom: 0;
 
-    height: 100%;
     width: auto;
+    height: 100%;
+
     max-width: 72%;
+
+    display: block;
 
     object-fit: contain;
     object-position: center bottom;
 
     pointer-events: none;
     user-select: none;
-    display: block;
 }
 
 
 /* =========================================
-   BACK PORTRAIT
-   Optional Second Person
+   06. BACK PORTRAIT
+   Optional
 ========================================= */
 
 .about-person-back {
@@ -120,8 +158,8 @@
 
 
 /* =========================================
-   FRONT PORTRAIT
-   DESKTOP DESIGN - KEEP ORIGINAL SETTINGS
+   07. FRONT PORTRAIT
+   KEEP YOUR PREFERRED DESIGN
 ========================================= */
 
 .about-image-wrapper .about-person-front {
@@ -129,9 +167,10 @@
 
     right: 1%;
 
-    height: 185%;
-    max-width: 90%;
     width: auto;
+    height: 185%;
+
+    max-width: 90%;
 
     bottom: -55%;
 
@@ -145,26 +184,16 @@
 
 
 /* =========================================
-   05. IMAGE GRADIENT
+   08. IMAGE GRADIENT
 ========================================= */
 
-.about-image-gradient {
-    position: absolute;
-    inset: 0;
-
-    z-index: 3;
+.about-image-wrapper>.position-absolute {
     pointer-events: none;
-
-    background: linear-gradient(to right,
-            #050505 0%,
-            rgba(5, 5, 5, 0.85) 15%,
-            rgba(5, 5, 5, 0.35) 35%,
-            transparent 60%);
 }
 
 
 /* =========================================
-   06. IMAGE POSITION
+   09. IMAGE POSITION UTILITY
 ========================================= */
 
 .position-lg-absolute {
@@ -176,12 +205,13 @@
 
 
 /* =========================================
-   07. INFINITE MARQUEE
+   10. MARQUEE MAIN CONTAINER
 ========================================= */
 
-/* Main Container */
 .marquee-bottom-bar {
     position: relative;
+
+    flex: 0 0 52px;
 
     width: 100%;
     height: 52px;
@@ -193,10 +223,14 @@
 }
 
 
-/* Moving Track */
+/* =========================================
+   11. MARQUEE TRACK
+========================================= */
+
 .marquee-track {
     display: flex;
     align-items: center;
+
     flex-wrap: nowrap;
 
     width: max-content;
@@ -210,10 +244,14 @@
 }
 
 
-/* Loop Group */
+/* =========================================
+   12. MARQUEE LOOP GROUP
+========================================= */
+
 .marquee-loop-group {
     display: flex;
     align-items: center;
+
     flex-wrap: nowrap;
 
     flex: 0 0 auto;
@@ -224,13 +262,17 @@
 }
 
 
-/* Content */
+/* =========================================
+   13. MARQUEE CONTENT
+========================================= */
+
 .marquee-content {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 
     flex-wrap: nowrap;
+
     flex: 0 0 auto;
 
     width: max-content;
@@ -241,15 +283,20 @@
     padding: 0;
 
     box-sizing: border-box;
+
     white-space: nowrap;
 }
 
 
-/* Marquee Text */
+/* =========================================
+   14. MARQUEE TEXT
+========================================= */
+
 .marquee-text {
     display: inline-block;
 
     flex-shrink: 0;
+
     white-space: nowrap;
 
     font-size: 0.95rem;
@@ -258,13 +305,18 @@
     color: #FFFFFF;
 
     letter-spacing: 0.05em;
+
     text-transform: uppercase;
 }
 
 
-/* Icon Link */
+/* =========================================
+   15. MARQUEE ICON LINK
+========================================= */
+
 .marquee-icon-link {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
@@ -274,7 +326,10 @@
 }
 
 
-/* Icon */
+/* =========================================
+   16. MARQUEE ICON
+========================================= */
+
 .marquee-icon {
     display: block;
 
@@ -288,15 +343,13 @@
     transition: transform 0.3s ease;
 }
 
-
-/* Icon Hover */
 .marquee-icon-link:hover .marquee-icon {
     transform: scale(1.15);
 }
 
 
 /* =========================================
-   08. INFINITE LOOP ANIMATION
+   17. INFINITE LOOP ANIMATION
 ========================================= */
 
 @keyframes scrollMarquee {
@@ -315,74 +368,110 @@
 
 
 /* =========================================
-   09. DESKTOP - 992PX AND ABOVE
-   PRESERVE ORIGINAL PORTRAIT
+   18. DESKTOP
+   992PX AND ABOVE
 ========================================= */
 
 @media (min-width: 992px) {
 
     #about {
-        height: auto;
+        min-height: 100vh;
     }
 
-    .position-lg-absolute {
+
+    #about>.flex-grow-1 {
+        min-height: calc(100vh - 52px);
+    }
+
+
+    /* Image Wrapper */
+    .about-image-wrapper.position-lg-absolute {
         position: absolute !important;
 
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: auto !important;
+
         width: 60% !important;
-        height: 100% !important;
+        height: auto !important;
     }
 
-    .about-image-wrapper.position-lg-absolute {
-        width: 60% !important;
-        height: 100% !important;
-    }
 
+    /* About Text */
     .about-text-content {
         padding-left: 7% !important;
         padding-right: 5%;
     }
 
-    /* Keep Preferred Front Portrait */
+
+    /* Front Portrait - Preferred Position */
     .about-image-wrapper .about-person-front {
         right: 1%;
 
         height: 185%;
         max-width: 90%;
+
         bottom: -55%;
+    }
+
+
+    /* Background Overlay */
+    .about-image-wrapper>.position-absolute {
+        z-index: 3;
     }
 
 }
 
 
 /* =========================================
-   10. TABLET - 768PX TO 991PX
+   19. TABLET
+   768PX - 991PX
 ========================================= */
 
 @media (min-width: 768px) and (max-width: 991.98px) {
 
     #about {
-        height: auto;
+        min-height: auto;
     }
 
+
+    #about>.flex-grow-1 {
+        min-height: 0;
+
+        flex-direction: column;
+    }
+
+
+    /* Image */
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
         width: 100% !important;
+
         height: clamp(380px, 55vw, 540px) !important;
 
         min-height: 0;
     }
 
-    /* Tablet Front Portrait */
+
+    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 2%;
 
         height: 155%;
         max-width: 95%;
+
         bottom: -45%;
     }
 
-    /* Tablet Back Portrait */
+
+    /* Back Portrait */
     .about-person-back {
         right: 1%;
 
@@ -390,55 +479,80 @@
         max-width: 58%;
     }
 
+
+    /* About Text */
     .about-text-content {
         padding: 3.5rem 5% !important;
     }
+
 
     .about-main-heading {
         font-size: clamp(2.8rem, 7vw, 4.8rem);
     }
 
+
     .about-body-text {
         font-size: 1.05rem;
+
         max-width: 620px;
     }
 
-    .about-image-gradient {
+
+    /* Gradient */
+    .about-image-wrapper>.position-absolute {
         background: linear-gradient(to top,
                 #050505 0%,
                 rgba(5, 5, 5, 0.2) 18%,
-                transparent 55%);
+                transparent 55%) !important;
     }
 
 }
 
 
 /* =========================================
-   11. MOBILE - 576PX TO 767PX
+   20. MOBILE
+   576PX - 767PX
 ========================================= */
 
 @media (min-width: 576px) and (max-width: 767.98px) {
 
     #about {
-        height: auto;
+        min-height: auto;
     }
 
+
+    #about>.flex-grow-1 {
+        min-height: 0;
+    }
+
+
+    /* Image */
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
         width: 100% !important;
+
         height: clamp(340px, 65vw, 440px) !important;
     }
 
-    /* Mobile Front Portrait */
+
+    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 1%;
 
         height: 148%;
         max-width: 100%;
+
         bottom: -43%;
     }
 
+
+    /* Back Portrait */
     .about-person-back {
         right: 0;
 
@@ -446,55 +560,79 @@
         max-width: 60%;
     }
 
+
+    /* Text */
     .about-text-content {
         padding: 3.5rem 1.75rem !important;
     }
 
+
     .about-main-heading {
         font-size: clamp(2.7rem, 7.5vw, 4rem);
     }
+
 
     .about-body-text {
         font-size: 1rem;
         max-width: 560px;
     }
 
-    .about-image-gradient {
+
+    /* Gradient */
+    .about-image-wrapper>.position-absolute {
         background: linear-gradient(to top,
                 #050505 0%,
                 rgba(5, 5, 5, 0.2) 18%,
-                transparent 55%);
+                transparent 55%) !important;
     }
 
 }
 
 
 /* =========================================
-   12. SMALL MOBILE - 375PX TO 575PX
+   21. SMALL MOBILE
+   376PX - 575PX
 ========================================= */
 
 @media (min-width: 376px) and (max-width: 575.98px) {
 
     #about {
-        height: auto;
+        min-height: auto;
     }
 
+
+    #about>.flex-grow-1 {
+        min-height: 0;
+    }
+
+
+    /* Image */
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
         width: 100% !important;
+
         height: clamp(300px, 78vw, 420px) !important;
     }
 
-    /* Small Mobile Front Portrait */
+
+    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: 0%;
 
         height: 140%;
         max-width: 100%;
+
         bottom: -40%;
     }
 
+
+    /* Back Portrait */
     .about-person-back {
         right: 0;
 
@@ -502,61 +640,86 @@
         max-width: 60%;
     }
 
+
+    /* Text */
     .about-text-content {
         padding: 3rem 1.5rem !important;
     }
+
 
     .about-subheading {
         font-size: 0.85rem;
     }
 
+
     .about-main-heading {
         font-size: clamp(2.35rem, 9vw, 3.4rem);
     }
+
 
     .about-body-text {
         font-size: 1rem;
         line-height: 1.6;
     }
 
-    .about-image-gradient {
+
+    /* Gradient */
+    .about-image-wrapper>.position-absolute {
         background: linear-gradient(to top,
                 #050505 0%,
                 rgba(5, 5, 5, 0.18) 15%,
-                transparent 55%);
+                transparent 55%) !important;
     }
 
 }
 
 
 /* =========================================
-   13. EXTRA SMALL MOBILE - 375PX AND BELOW
+   22. EXTRA SMALL MOBILE
+   375PX AND BELOW
 ========================================= */
 
 @media (max-width: 375px) {
 
     #about {
-        height: auto;
+        min-height: auto;
     }
 
+
+    #about>.flex-grow-1 {
+        min-height: 0;
+    }
+
+
+    /* Image */
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
 
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+
         width: 100% !important;
+
         height: 300px !important;
 
         min-height: 300px;
     }
 
-    /* Extra Small Front Portrait */
+
+    /* Front Portrait */
     .about-image-wrapper .about-person-front {
         right: -2%;
 
         height: 135%;
         max-width: 105%;
+
         bottom: -38%;
     }
 
+
+    /* Back Portrait */
     .about-person-back {
         right: -1%;
 
@@ -564,57 +727,70 @@
         max-width: 58%;
     }
 
+
+    /* Text */
     .about-text-content {
         padding: 2.5rem 1.25rem !important;
     }
+
 
     .about-subheading {
         font-size: 0.8rem;
         letter-spacing: 0.12em;
     }
 
+
     .about-main-heading {
         font-size: clamp(2.2rem, 9.5vw, 2.8rem);
         line-height: 1.04;
     }
+
 
     .about-body-text {
         font-size: 0.95rem;
         line-height: 1.6;
     }
 
-    .about-image-gradient {
+
+    /* Gradient */
+    .about-image-wrapper>.position-absolute {
         background: linear-gradient(to top,
                 #050505 0%,
                 rgba(5, 5, 5, 0.15) 15%,
-                transparent 55%);
+                transparent 55%) !important;
     }
 
 }
 
 
 /* =========================================
-   14. MARQUEE RESPONSIVE
+   23. MARQUEE RESPONSIVE
 ========================================= */
 
 @media (max-width: 767.98px) {
 
     .marquee-bottom-bar {
+        flex-basis: 46px;
+
         height: 46px;
     }
+
 
     .marquee-track {
         animation-duration: 22s;
     }
+
 
     .marquee-content,
     .marquee-loop-group {
         gap: 0.7rem;
     }
 
+
     .marquee-text {
         font-size: 0.85rem;
     }
+
 
     .marquee-icon {
         width: 18px;
@@ -625,7 +801,7 @@
 
 
 /* =========================================
-   15. EXTRA SMALL MARQUEE
+   24. EXTRA SMALL MARQUEE
 ========================================= */
 
 @media (max-width: 375px) {
@@ -633,6 +809,7 @@
     .marquee-text {
         font-size: 0.8rem;
     }
+
 
     .marquee-icon {
         width: 16px;
@@ -643,7 +820,7 @@
 
 
 /* =========================================
-   16. ACCESSIBILITY
+   25. ACCESSIBILITY
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -653,10 +830,8 @@
         transform: none;
     }
 
-    .marquee-icon {
-        transition: none;
-    }
 
+    .marquee-icon,
     .about-person {
         transition: none;
     }

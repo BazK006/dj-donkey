@@ -115,16 +115,6 @@ body {
     box-shadow: none;
 }
 
-#about {
-    box-sizing: border-box;
-    padding-top: var(--site-header-height) !important;
-    min-height: calc(100vh + var(--site-header-height)) !important;
-}
-
-#about .about-image-wrapper {
-    box-sizing: border-box;
-}
-
 #live-performance,
 #gallery-section,
 #contact-section {
