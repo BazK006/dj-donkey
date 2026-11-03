@@ -51,7 +51,7 @@ body {
 
 .site-header .nav-link-item {
     position: relative;
-    color: rgba(255, 255, 255, 0.72) !important;
+    color: rgba(255, 255, 255, 0.72) !important; /* ทอง */
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.16em;

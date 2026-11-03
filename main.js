@@ -1,3 +1,4 @@
+
 import * as THREE from 'three';
 import { SVGLoader } from './vendor/SVGLoader.js';
 import { RoomEnvironment } from './vendor/RoomEnvironment.js';
@@ -8,23 +9,25 @@ const LOGO_CONFIG = {
   bevelSize: 1.1,
   secondsPerTurn: 28,
 
+  initialRotationX: -0.06,
+  initialRotationY: -0.16,
+  resumeDelay: 500,
+  resumeTiltSpeed: 3.5,
+
   faceColor: '#eeeeeb',
   sideColor: '#a2a2a0',
-
   metalness: 0.88,
   roughness: 0.24,
 
   maxPixelRatio: 1.7,
   softwareFPS: 20,
 
-  dragSensitivityX: 0.008,
-  dragSensitivityY: 0.004,
-
+  dragSensitivityX: 0.006,
+  dragSensitivityY: 0.002,
 };
 
 const stage = document.querySelector('#logo-stage');
 const canvas = document.querySelector('#logo-canvas');
-
 const status = document.querySelector('#render-status');
 
 const pauseButton = document.querySelector('#toggle-rotation');
@@ -32,7 +35,6 @@ const resetButton = document.querySelector('#reset-view');
 
 const motionIcon = document.querySelector('#motion-icon');
 const motionLabel = document.querySelector('#motion-label');
-
 const dragHint = document.querySelector('#drag-hint');
 
 const motionPreference = window.matchMedia(
@@ -40,7 +42,6 @@ const motionPreference = window.matchMedia(
 );
 
 let renderer = null;
-
 let ready = false;
 let failed = false;
 
@@ -50,11 +51,12 @@ let activeRenderCallback = null;
 let resizeObserver = null;
 let intersectionObserver = null;
 
-let mainScene = null;
-let mainCamera = null;
-let mainLogo = null;
+let resumeTimer = null;
 
-let artworkSize = null;
+
+// =========================================
+// RENDER LOOP
+// =========================================
 
 function setRenderLoop(callback) {
   activeRenderCallback = callback;
@@ -72,19 +74,16 @@ function setRenderLoop(callback) {
   if (!callback) return;
 
   let lastPaint = 0;
+  const frameInterval = 1000 / LOGO_CONFIG.softwareFPS;
 
   function tick(time) {
-
     if (!activeRenderCallback) return;
 
     softwareFrame = requestAnimationFrame(tick);
 
-    const frameInterval = 1000 / LOGO_CONFIG.softwareFPS;
-
     if (time - lastPaint < frameInterval) return;
 
     lastPaint = time;
-
     activeRenderCallback(time);
   }
 
@@ -92,22 +91,31 @@ function setRenderLoop(callback) {
 }
 
 
-/* ============================================================
-   05. STATUS & FALLBACK
-   ============================================================ */
+// =========================================
+// AUTO RESUME TIMER
+// =========================================
+function clearResumeTimer() {
+  if (resumeTimer !== null) {
+    window.clearTimeout(resumeTimer);
+    resumeTimer = null;
+  }
+}
 
+
+// =========================================
+// FALLBACK
+// =========================================
 function showFallback(error) {
-
   if (failed) return;
 
   failed = true;
   ready = false;
 
+  clearResumeTimer();
   setRenderLoop(null);
 
   if (stage) {
-    stage.classList.remove('is-ready');
-    stage.classList.remove('is-dragging');
+    stage.classList.remove('is-ready', 'is-dragging');
   }
 
   if (status) {
@@ -126,33 +134,18 @@ function showFallback(error) {
 }
 
 
-/* ============================================================
-   06. INITIALIZE 3D SCENE
-   ============================================================ */
-
+// =========================================
+// INITIALIZE 3D SCENE
+// =========================================
 async function startLogo() {
 
-  // DOM Validation
   if (!stage || !canvas) {
-
     throw new Error(
       'Missing #logo-stage or #logo-canvas in index.html'
     );
   }
 
-
-  /* --------------------------------------------------------
-     Scene
-  -------------------------------------------------------- */
-
   const scene = new THREE.Scene();
-
-  mainScene = scene;
-
-
-  /* --------------------------------------------------------
-     Camera
-  -------------------------------------------------------- */
 
   const camera = new THREE.OrthographicCamera(
     -5, 5,
@@ -161,28 +154,17 @@ async function startLogo() {
   );
 
   camera.position.set(0, 0, 16);
-
   camera.lookAt(0, 0, 0);
-
-  mainCamera = camera;
-
-
-  /* --------------------------------------------------------
-     Renderer Initialization
-  -------------------------------------------------------- */
 
   let softwareMode = false;
 
+
+  // RENDERER
   try {
-
     renderer = new THREE.WebGLRenderer({
-
-      canvas: canvas,
-
+      canvas,
       alpha: true,
-
       antialias: true,
-
     });
 
     renderer.setPixelRatio(
@@ -193,11 +175,8 @@ async function startLogo() {
     );
 
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-
     renderer.toneMappingExposure = 1.35;
-
     renderer.setClearColor(0x080808, 0);
 
   } catch (webglError) {
@@ -207,7 +186,6 @@ async function startLogo() {
       webglError
     );
 
-    // SVG Software Renderer
     const { SVGRenderer } = await import(
       './vendor/renderers/SVGRenderer.js'
     );
@@ -215,9 +193,7 @@ async function startLogo() {
     renderer = new SVGRenderer();
 
     renderer.setPrecision(2);
-
     renderer.overdraw = 0.8;
-
     renderer.setClearColor(0x080808);
 
     renderer.domElement.setAttribute(
@@ -232,19 +208,13 @@ async function startLogo() {
     stage.appendChild(renderer.domElement);
 
     canvas.hidden = true;
-
     softwareMode = true;
   }
 
 
-  /* ========================================================
-     07. ENVIRONMENT & LIGHTING
-     ======================================================== */
-
+  // LIGHTING
   if (!softwareMode) {
-
     const environment = new RoomEnvironment();
-
     const generator = new THREE.PMREMGenerator(renderer);
 
     const environmentMap = generator.fromScene(
@@ -255,55 +225,40 @@ async function startLogo() {
     scene.environment = environmentMap.texture;
 
     environment.dispose();
-
     generator.dispose();
 
   } else {
-
     scene.add(
       new THREE.AmbientLight(0xffffff, 0.3)
     );
   }
 
-
-  // Main Light
   const keyLight = new THREE.DirectionalLight(
     0xffffff,
     softwareMode ? 0.75 : 3
   );
 
   keyLight.position.set(-4, 5, 8);
-
   scene.add(keyLight);
 
-
-  // Gold Rim Light
   const rimLight = new THREE.DirectionalLight(
     0xc5a158,
     softwareMode ? 0.4 : 2
   );
 
   rimLight.position.set(5, 0, -4);
-
   scene.add(rimLight);
 
-
-  // Cool Fill Light
   const fillLight = new THREE.DirectionalLight(
     0xd5e1ff,
     softwareMode ? 0.2 : 1.2
   );
 
   fillLight.position.set(2, -3, 5);
-
   scene.add(fillLight);
 
 
-  /* ========================================================
-     08. LOAD SVG LOGO
-     Convert SVG Paths into 3D Geometry
-     ======================================================== */
-
+  // LOAD SVG
   if (status) {
     status.textContent = 'Loading DONKEY logo...';
   }
@@ -314,95 +269,56 @@ async function startLogo() {
     LOGO_CONFIG.svgUrl
   );
 
-
   const artwork = new THREE.Group();
 
 
-  /* --------------------------------------------------------
-     Materials
-
-     Standard Material: WebGL
-     Basic Material: SVG Software Renderer
-  -------------------------------------------------------- */
-
+  // MATERIALS
   const faceMaterial = softwareMode
-
     ? new THREE.MeshBasicMaterial({
-
       color: LOGO_CONFIG.faceColor,
-
     })
-
     : new THREE.MeshStandardMaterial({
-
       color: LOGO_CONFIG.faceColor,
-
       metalness: LOGO_CONFIG.metalness,
-
       roughness: LOGO_CONFIG.roughness,
-
       envMapIntensity: 1.3,
-
     });
-
 
   const sideMaterial = softwareMode
-
     ? new THREE.MeshBasicMaterial({
-
       color: LOGO_CONFIG.sideColor,
-
     })
-
     : new THREE.MeshStandardMaterial({
-
       color: LOGO_CONFIG.sideColor,
-
       metalness: LOGO_CONFIG.metalness,
-
       roughness: LOGO_CONFIG.roughness + 0.05,
-
       envMapIntensity: 1.3,
-
     });
 
 
-  /* --------------------------------------------------------
-     SVG Path Conversion
-  -------------------------------------------------------- */
-
+  // SVG PATH CONVERSION
   for (const path of data.paths) {
 
-    // Ignore unfilled paths
     if (path.userData.style.fill === 'none') continue;
 
-
     const shapes = SVGLoader.createShapes(path);
-
 
     for (const shape of shapes) {
 
       const geometry = new THREE.ExtrudeGeometry(
         shape,
         {
-
           depth: LOGO_CONFIG.depth,
-
           steps: 1,
 
           bevelEnabled: !softwareMode,
-
           bevelSize: LOGO_CONFIG.bevelSize,
-
           bevelThickness: LOGO_CONFIG.bevelSize,
 
           bevelSegments: softwareMode ? 1 : 3,
-
           curveSegments: softwareMode ? 10 : 24,
-
         }
       );
-
 
       const mesh = new THREE.Mesh(
         geometry,
@@ -416,34 +332,22 @@ async function startLogo() {
     }
   }
 
-
-  // Verify SVG
   if (!artwork.children.length) {
-
     throw new Error(
       'SVG contains no filled paths. Check the source SVG.'
     );
   }
 
 
-  /* ========================================================
-     09. LOGO TRANSFORMATION
-     ======================================================== */
-
-  // SVG Y-axis points downward.
-  // Three.js Y-axis points upward.
-
+  // LOGO TRANSFORMATION
   artwork.scale.set(
     0.006,
     -0.006,
     0.006
   );
 
-
   artwork.updateMatrixWorld(true);
 
-
-  // Calculate Bounding Box
   const bounds = new THREE.Box3().setFromObject(artwork);
 
   const size = bounds.getSize(
@@ -454,81 +358,51 @@ async function startLogo() {
     new THREE.Vector3()
   );
 
-
-  // Center Logo
   artwork.position.sub(center);
 
-  artworkSize = size;
 
-
-  /* --------------------------------------------------------
-     Create Main Logo Group
-  -------------------------------------------------------- */
-
+  // MAIN LOGO GROUP
   const logo = new THREE.Group();
 
   logo.add(artwork);
 
-  // Initial View
   logo.rotation.set(
-    -0.06,
-    -0.16,
+    LOGO_CONFIG.initialRotationX,
+    LOGO_CONFIG.initialRotationY,
     0
   );
 
   scene.add(logo);
 
-  mainLogo = logo;
 
-
-  /* ========================================================
-     10. RESPONSIVE CAMERA
-     ======================================================== */
-
+  // =========================================
+  // RESPONSIVE CAMERA
+  // =========================================
   let viewDirty = true;
-
 
   function resize() {
 
     const width = stage.clientWidth;
-
     const height = stage.clientHeight;
-
 
     if (width <= 0 || height <= 0) return;
 
-
     const aspect = width / height;
 
-
-    /*
-     * คำนวณพื้นที่กล้องตามสัดส่วนหน้าจอ
-     * เพื่อรักษาโลโก้ทั้งชิ้นไม่ให้ถูกตัด
-     */
-
     const viewHeight = Math.max(
-
       size.y * 1.8,
-
       (size.x * 1.21) / aspect
-
     );
-
 
     const viewWidth = viewHeight * aspect;
 
-
     camera.left = -viewWidth / 2;
-
     camera.right = viewWidth / 2;
 
     camera.top = viewHeight / 2;
-
     camera.bottom = -viewHeight / 2;
 
-
     camera.updateProjectionMatrix();
-
 
     renderer.setSize(
       width,
@@ -536,40 +410,50 @@ async function startLogo() {
       false
     );
 
-
     viewDirty = true;
   }
 
-
-  // Resize Observer
   if (window.ResizeObserver) {
 
     resizeObserver = new ResizeObserver(resize);
-
     resizeObserver.observe(stage);
 
   } else {
-
     window.addEventListener('resize', resize);
-
   }
-
 
   resize();
 
 
-  /* ========================================================
-     11. ROTATION CONTROLS
-     Pause / Play / Front View
-     ======================================================== */
-  let paused = motionPreference.matches;
+  // =========================================
+  // ROTATION STATE
+  // =========================================
+  let manuallyPaused = false;
   let dragging = false;
+  let returningToBase = false;
+
+  let activePointerId = null;
+
   let pointerX = 0;
   let pointerY = 0;
+
   let lastTime = null;
 
 
+  function isRotationPaused() {
+    return (
+      manuallyPaused ||
+      dragging ||
+      resumeTimer !== null ||
+      motionPreference.matches
+    );
+  }
+
+
   function updateControls() {
+
+    const paused = isRotationPaused();
+
     if (pauseButton) {
       pauseButton.setAttribute(
         'aria-pressed',
@@ -579,8 +463,8 @@ async function startLogo() {
 
     if (motionLabel) {
       motionLabel.textContent = paused
-        ? 'Play rotation'
-        : 'Pause rotation';
+        ? 'PLAY ROTATION'
+        : 'PAUSE ROTATION';
     }
 
     if (motionIcon) {
@@ -591,92 +475,167 @@ async function startLogo() {
   }
 
 
-  // Pause / Play
-  pauseButton?.addEventListener('click', () => {
-    paused = !paused;
-    updateControls();
-  });
+  // =========================================
+  // AUTO RESUME
+  // =========================================
+  function scheduleAutoResume() {
 
+    clearResumeTimer();
 
-  // Front View
-  resetButton?.addEventListener('click', () => {
-
-    logo.rotation.set(0, 0, 0);
-
-    viewDirty = true;
-
-    paused = true;
-
-    updateControls();
-  });
-
-
-  // Respect System Reduced Motion
-  if (motionPreference.addEventListener) {
-    motionPreference.addEventListener(
-      'change',
-      (event) => {
-        paused = event.matches;
-        updateControls();
-      }
-    );
-
-  } else {
-    motionPreference.addListener((event) => {
-      paused = event.matches;
+    if (
+      manuallyPaused ||
+      motionPreference.matches ||
+      failed
+    ) {
       updateControls();
-    });
+      return;
+    }
+
+    resumeTimer = window.setTimeout(() => {
+
+      resumeTimer = null;
+
+      returningToBase = true;
+
+      updateControls();
+
+    }, LOGO_CONFIG.resumeDelay);
+
+    updateControls();
   }
 
 
-  /* ========================================================
-     12. DRAG CONTROLS
-     Mouse / Touch / Pointer
-     ======================================================== */
+  // =========================================
+  // PAUSE / PLAY BUTTON
+  // =========================================
+  pauseButton?.addEventListener('click', () => {
 
+    if (dragging || motionPreference.matches) return;
 
-  // Begin Drag
-  stage.addEventListener('pointerdown', (event) => {
+    const currentlyPaused = isRotationPaused();
 
-    if (!event.isPrimary || event.button !== 0) return;
+    if (currentlyPaused) {
 
+      manuallyPaused = false;
 
-    dragging = true;
+      clearResumeTimer();
 
-    paused = true;
+      returningToBase = true;
 
-    pointerX = event.clientX;
+    } else {
 
-    pointerY = event.clientY;
+      manuallyPaused = true;
 
+      clearResumeTimer();
 
-    if (stage.setPointerCapture) {
-
-      stage.setPointerCapture(event.pointerId);
+      returningToBase = false;
     }
 
+    updateControls();
+  });
+
+
+  // FRONT VIEW
+  resetButton?.addEventListener('click', () => {
+
+    clearResumeTimer();
+
+    logo.rotation.set(0, 0, 0);
+
+    manuallyPaused = true;
+    returningToBase = false;
+
+    viewDirty = true;
+
+    updateControls();
+  });
+
+
+  // REDUCED MOTION
+  function handleMotionPreferenceChange(event) {
+
+    if (event.matches) {
+
+      clearResumeTimer();
+
+      returningToBase = false;
+
+    } else if (!manuallyPaused && !dragging) {
+
+      returningToBase = true;
+    }
+
+    updateControls();
+  }
+
+  if (motionPreference.addEventListener) {
+
+    motionPreference.addEventListener(
+      'change',
+      handleMotionPreferenceChange
+    );
+
+  } else {
+
+    motionPreference.addListener(
+      handleMotionPreferenceChange
+    );
+  }
+
+
+  // =========================================
+  // DRAG CONTROLS
+  // =========================================
+  function beginDrag(event) {
+
+    if (!event.isPrimary) return;
+
+    if (
+      event.pointerType === 'mouse' &&
+      event.button !== 0
+    ) {
+      return;
+    }
+
+    clearResumeTimer();
+
+    dragging = true;
+    returningToBase = false;
+
+    activePointerId = event.pointerId;
+
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+
+    try {
+      stage.setPointerCapture(event.pointerId);
+
+    } catch (error) {
+      console.warn(
+        'DONKEY: Pointer capture unavailable.',
+        error
+      );
+    }
 
     stage.classList.add('is-dragging');
 
     updateControls();
-  });
+  }
 
-
-  // Rotate Logo
-  stage.addEventListener('pointermove', (event) => {
-
-    if (!dragging || !event.isPrimary) return;
-
+  function moveDrag(event) {
+    if (
+      !dragging ||
+      event.pointerId !== activePointerId
+    ) {
+      return;
+    }
 
     const deltaX = event.clientX - pointerX;
-
     const deltaY = event.clientY - pointerY;
-
 
     // Horizontal Rotation
     logo.rotation.y +=
       deltaX * LOGO_CONFIG.dragSensitivityX;
-
 
     // Vertical Rotation
     logo.rotation.x = THREE.MathUtils.clamp(
@@ -685,78 +644,105 @@ async function startLogo() {
       deltaY * LOGO_CONFIG.dragSensitivityY,
 
       -0.5,
-
       0.5
-
     );
 
-
     pointerX = event.clientX;
-
     pointerY = event.clientY;
 
-
     viewDirty = true;
-  });
-
-
-  // End Drag
-  function endDrag() {
-
-    dragging = false;
-
-    stage.classList.remove('is-dragging');
   }
 
 
+  function endDrag(event) {
+
+    if (!dragging) return;
+
+    if (
+      event &&
+      event.pointerId !== activePointerId
+    ) {
+      return;
+    }
+
+    dragging = false;
+    activePointerId = null;
+
+    stage.classList.remove('is-dragging');
+
+    scheduleAutoResume();
+  }
+
+
+  stage.addEventListener('pointerdown', beginDrag);
+  stage.addEventListener('pointermove', moveDrag);
   stage.addEventListener('pointerup', endDrag);
-
   stage.addEventListener('pointercancel', endDrag);
-
   stage.addEventListener('lostpointercapture', endDrag);
 
+  window.addEventListener('blur', () => {
+    if (dragging) {
+      endDrag();
+    }
+  });
 
-  /* ========================================================
-     13. ANIMATION FRAME
-     FPS Independent Rotation
-     ======================================================== */
 
-
+  // =========================================
+  // ANIMATION FRAME
+  // =========================================
   function frame(time) {
 
     const delta = lastTime === null
-
       ? 0
-
       : Math.min(
         (time - lastTime) / 1000,
         0.05
       );
 
-
     lastTime = time;
 
-
-    // Check Current Animation State
     const isAnimating =
-      !paused &&
+      !manuallyPaused &&
       !dragging &&
+      resumeTimer === null &&
+      !motionPreference.matches &&
       !document.hidden;
 
 
-    // Automatic Rotation
+    // AUTO ROTATION
     if (isAnimating) {
 
       logo.rotation.y +=
-
         delta *
         Math.PI * 2 /
         LOGO_CONFIG.secondsPerTurn;
 
+
+      // RETURN TO HORIZONTAL POSITION
+      if (returningToBase) {
+
+        logo.rotation.x = THREE.MathUtils.damp(
+          logo.rotation.x,
+          LOGO_CONFIG.initialRotationX,
+          LOGO_CONFIG.resumeTiltSpeed,
+          delta
+        );
+
+        if (
+          Math.abs(
+            logo.rotation.x -
+            LOGO_CONFIG.initialRotationX
+          ) < 0.001
+        ) {
+          logo.rotation.x =
+            LOGO_CONFIG.initialRotationX;
+
+          returningToBase = false;
+        }
+      }
     }
 
 
-    // Render Only When Needed
     if (isAnimating || viewDirty) {
 
       renderer.render(scene, camera);
@@ -765,47 +751,31 @@ async function startLogo() {
     }
   }
 
-
-  /* ========================================================
-     14. START ENGINE
-     ======================================================== */
-
   ready = true;
 
+  if (pauseButton) {
+    pauseButton.disabled = false;
+  }
 
-  // Enable Controls
-  if (pauseButton) pauseButton.disabled = false;
-
-  if (resetButton) resetButton.disabled = false;
-
+  if (resetButton) {
+    resetButton.disabled = false;
+  }
 
   updateControls();
 
-
-  // Render First Frame Before Showing Canvas
   renderer.render(scene, camera);
 
-
-  // Hide Fallback and Show 3D
   stage.classList.add('is-ready');
-
 
   if (status) {
     status.textContent = '';
   }
 
-
-  /* ========================================================
-     15. VISIBILITY & PERFORMANCE
-     ======================================================== */
-
   let inView = true;
-
 
   function syncLoop() {
 
     lastTime = null;
-
 
     const shouldRender =
       !document.hidden &&
@@ -813,30 +783,24 @@ async function startLogo() {
       ready &&
       !failed;
 
-
     setRenderLoop(
       shouldRender ? frame : null
     );
   }
 
-
-  // Pause Rendering When Tab Is Hidden
   document.addEventListener(
     'visibilitychange',
     syncLoop
   );
 
 
-  // Pause Rendering When Section Is Outside Viewport
   if (window.IntersectionObserver) {
-
     intersectionObserver = new IntersectionObserver(
       ([entry]) => {
 
         inView = entry.isIntersecting;
 
         syncLoop();
-
       },
       {
         threshold: 0
@@ -844,13 +808,7 @@ async function startLogo() {
     );
 
     intersectionObserver.observe(stage);
-
   }
-
-
-  /* ========================================================
-     16. WEBGL CONTEXT LOSS
-     ======================================================== */
 
   canvas.addEventListener(
     'webglcontextlost',
@@ -863,17 +821,11 @@ async function startLogo() {
           'WebGL context lost. Reload the page to retry.'
         )
       );
-
     }
   );
 
 
-  /* ========================================================
-     17. FINAL INITIALIZATION
-     ======================================================== */
-
   syncLoop();
-
 
   console.info(
     'DONKEY 3D Engine initialized successfully.',
@@ -889,18 +841,12 @@ async function startLogo() {
       },
 
       rotationSeconds: LOGO_CONFIG.secondsPerTurn,
-
-      reducedMotion: paused
+      resumeDelay: LOGO_CONFIG.resumeDelay,
+      reducedMotion: motionPreference.matches
     }
   );
-
 }
 
-
-/* ============================================================
-   18. START
-   ============================================================ */
 startLogo().catch((error) => {
   showFallback(error);
-
 });

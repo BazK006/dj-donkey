@@ -1,7 +1,3 @@
-/* =========================================
-   01. ABOUT SECTION
-========================================= */
-
 #about.about-section {
     position: relative;
 
@@ -22,11 +18,6 @@
     font-family: "Inter", sans-serif;
 }
 
-
-/* =========================================
-   02. MAIN LAYOUT
-========================================= */
-
 #about .about-layout {
     position: relative;
 
@@ -37,11 +28,6 @@
     min-height: calc(100vh - 52px);
     min-height: calc(100svh - 52px);
 }
-
-
-/* =========================================
-   03. ABOUT CONTENT
-========================================= */
 
 .about-content-layer {
     position: relative;
@@ -85,11 +71,6 @@
     line-height: 1.6;
 }
 
-
-/* =========================================
-   04. IMAGE WRAPPER
-========================================= */
-
 .about-image-wrapper {
     position: relative;
 
@@ -105,11 +86,6 @@
 
     z-index: 1;
 }
-
-
-/* =========================================
-   05. BACKGROUND IMAGE
-========================================= */
 
 .about-background-image {
     position: absolute;
@@ -129,250 +105,167 @@
     z-index: 0;
 }
 
-
-/* =========================================
-   06. PORTRAIT BASE
-========================================= */
-
 .about-person {
     position: absolute;
-
     bottom: 0;
-
     width: auto;
     height: 100%;
-
     max-width: 72%;
-
     display: block;
-
     object-fit: contain;
     object-position: center bottom;
-
     pointer-events: none;
     user-select: none;
 }
 
-
-/* =========================================
-   07. BACK PORTRAIT
-========================================= */
-
 .about-person-back {
     right: 2%;
-
     height: 86%;
     max-width: 60%;
-
     z-index: 1;
-
     opacity: 0.88;
-
     filter: brightness(0.78);
 }
 
-
-/* =========================================
-   08. FRONT PORTRAIT
-========================================= */
-
 .about-image-wrapper .about-person-front {
     position: absolute;
-
-    right: 1%;
+    right: -3%;
     bottom: -55%;
-
     width: auto;
     height: 185%;
-
     max-width: 90%;
-
     z-index: 2;
-
     object-fit: contain;
     object-position: center bottom;
-
     filter: drop-shadow(15px 5px 25px rgba(0, 0, 0, 0.3));
 }
 
-
-/* =========================================
-   09. IMAGE GRADIENT
-========================================= */
-
 .about-image-gradient {
     z-index: 3;
-
     pointer-events: none;
-
     background: linear-gradient(to right,
             #050505 0%,
             rgba(5, 5, 5, 0.8) 20%,
             transparent 100%);
 }
 
+.about-image-wrapper::before,
+.about-image-wrapper::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 4;
+    pointer-events: none;
+}
 
-/* =========================================
-   10. MARQUEE CONTAINER
-========================================= */
+.about-image-wrapper::before {
+    top: 0;
+    height: 20%;
+    background: linear-gradient(to bottom,
+            #050505 0%,
+            rgba(5, 5, 5, 0.72) 25%,
+            rgba(5, 5, 5, 0.28) 60%,
+            transparent 100%);
+}
+
+.about-image-wrapper::after {
+    bottom: 0;
+    height: 22%;
+    background: linear-gradient(to top,
+            #050505 0%,
+            rgba(5, 5, 5, 0.78) 25%,
+            rgba(5, 5, 5, 0.3) 60%,
+            transparent 100%);
+}
 
 .marquee-bottom-bar {
     --marquee-gap: 1.1rem;
-
     position: relative;
-
     display: flex;
     align-items: center;
-
     flex: 0 0 52px;
-
     width: 100%;
     height: 52px;
-
     background-color: #050505;
-
     border-top: 0.5px solid #D6A857;
     border-bottom: 0.5px solid #D6A857;
-
     box-sizing: border-box;
-
     overflow: hidden;
     white-space: nowrap;
 }
 
-
-/* =========================================
-   11. MARQUEE TRACK
-========================================= */
-
 .marquee-track {
     display: flex;
     align-items: center;
-
     flex-wrap: nowrap;
-
     width: max-content;
     height: 100%;
-
     gap: 0;
-
     animation: scrollMarquee 25s linear infinite;
-
     will-change: transform;
 }
-
-
-/* =========================================
-   12. MARQUEE LOOP GROUP
-========================================= */
 
 .marquee-loop-group {
     display: flex;
     align-items: center;
-
     flex-wrap: nowrap;
-
     flex: 0 0 auto;
-
     width: max-content;
-
     gap: var(--marquee-gap);
-
     padding-right: var(--marquee-gap);
-
     box-sizing: content-box;
 }
-
-
-/* =========================================
-   13. MARQUEE CONTENT
-========================================= */
 
 .marquee-content {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     flex-wrap: nowrap;
-
     flex: 0 0 auto;
-
     width: max-content;
     min-width: 0;
-
     gap: var(--marquee-gap);
-
     padding: 0;
-
     box-sizing: border-box;
-
     white-space: nowrap;
 }
-
-
-/* =========================================
-   14. MARQUEE TEXT
-========================================= */
 
 .marquee-text {
     display: inline-flex;
     align-items: center;
-
     flex-shrink: 0;
-
     margin: 0;
     padding: 0;
-
     color: #FFFFFF;
-
     font-size: 0.95rem;
     font-weight: 800;
-
     line-height: 1;
     letter-spacing: 0.05em;
-
     text-transform: uppercase;
 }
 
-
-/* =========================================
-   15. MARQUEE ICON WRAPPER
-========================================= */
-
 .marquee-icon-wrap {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     flex: 0 0 24px;
-
     width: 24px;
     height: 24px;
-
     margin: 0;
     padding: 0;
 }
 
-
-/* =========================================
-   16. MARQUEE ICON
-========================================= */
-
 .marquee-icon {
     display: block;
-
     width: 21px;
     height: 21px;
-
     margin: 0;
     padding: 0;
-
     object-fit: contain;
     object-position: center;
-
     flex-shrink: 0;
-
     transition: transform 0.3s ease;
 }
 
@@ -380,13 +273,7 @@
     transform: scale(1.15);
 }
 
-
-/* =========================================
-   17. MARQUEE ANIMATION
-========================================= */
-
 @keyframes scrollMarquee {
-
     from {
         transform: translate3d(0, 0, 0);
     }
@@ -396,17 +283,19 @@
                 0,
                 0);
     }
+}
+
+@media (max-width: 767.98px) {
+    .about-image-wrapper .about-person-front {
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, 12%) scale(1.16);
+        transform-origin: center bottom;
+    }
 
 }
 
-
-/* =========================================
-   18. DESKTOP
-   992PX AND ABOVE
-========================================= */
-
 @media (min-width: 992px) {
-
     #about.about-section {
         min-height: 100vh;
         min-height: 100svh;
@@ -418,8 +307,6 @@
         min-height: calc(100vh - 52px);
         min-height: calc(100svh - 52px);
     }
-
-    /* Right Side Image */
 
     .about-image-wrapper.position-lg-absolute {
         position: absolute !important;
@@ -433,8 +320,6 @@
         height: auto !important;
     }
 
-    /* Left Side Content */
-
     .about-content-layer {
         width: 100%;
     }
@@ -444,26 +329,14 @@
         padding-right: 5%;
     }
 
-    /* Preserve Original Portrait Position */
-
     .about-image-wrapper .about-person-front {
-        right: 1%;
-        bottom: -55%;
-
-        height: 185%;
-        max-width: 90%;
+        left: auto;
+        right: -3%;
+        transform: none;
     }
-
 }
 
-
-/* =========================================
-   19. TABLET
-   768PX - 991PX
-========================================= */
-
 @media (min-width: 768px) and (max-width: 991.98px) {
-
     #about.about-section {
         min-height: auto;
     }
@@ -473,8 +346,6 @@
 
         min-height: 0;
     }
-
-    /* Content First */
 
     .about-content-layer {
         order: 1;
@@ -499,8 +370,6 @@
 
         font-size: 1.05rem;
     }
-
-    /* Image Below Content */
 
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
@@ -533,27 +402,69 @@
         max-width: 58%;
     }
 
+    .about-image-wrapper::before {
+        height: 24%;
+        background: linear-gradient(to bottom,
+                #050505 0%,
+                rgba(5, 5, 5, 0.85) 18%,
+                rgba(5, 5, 5, 0.38) 55%,
+                transparent 100%);
+    }
+
+    .about-image-wrapper::after {
+        height: 30%;
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.85) 18%,
+                rgba(5, 5, 5, 0.35) 55%,
+                transparent 100%);
+    }
 }
 
+@media (max-width: 991.98px) {
 
-/* =========================================
-   20. MOBILE
-   576PX - 767PX
-========================================= */
+    .about-image-wrapper::before,
+    .about-image-wrapper::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 3;
+        pointer-events: none;
+    }
+
+    .about-image-wrapper::before {
+        top: 0;
+        height: 24%;
+        background: linear-gradient(to bottom,
+                #050505 0%,
+                rgba(5, 5, 5, 0.85) 18%,
+                rgba(5, 5, 5, 0.38) 55%,
+                transparent 100%);
+    }
+
+    .about-image-wrapper::after {
+        bottom: 0;
+        height: 30%;
+        background: linear-gradient(to top,
+                #050505 0%,
+                rgba(5, 5, 5, 0.85) 18%,
+                rgba(5, 5, 5, 0.35) 55%,
+                transparent 100%);
+    }
+
+}
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-
     #about.about-section {
         min-height: auto;
     }
 
     #about .about-layout {
         flex-direction: column;
-
         min-height: 0;
     }
-
-    /* Content First */
 
     .about-content-layer {
         order: 1;
@@ -573,65 +484,46 @@
 
     .about-body-text {
         max-width: 560px;
-
         font-size: 1rem;
         line-height: 1.6;
     }
 
-    /* Image Below Content */
-
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
-
         top: auto !important;
         right: auto !important;
         bottom: auto !important;
         left: auto !important;
-
         order: 2;
-
         width: 100% !important;
         height: clamp(340px, 65vw, 440px) !important;
-
         flex: 0 0 auto;
     }
 
     .about-image-wrapper .about-person-front {
         right: 1%;
         bottom: -43%;
-
         height: 148%;
         max-width: 100%;
     }
 
     .about-person-back {
         right: 0;
-
         height: 82%;
         max-width: 60%;
     }
 
 }
 
-
-/* =========================================
-   21. SMALL MOBILE
-   376PX - 575PX
-========================================= */
-
 @media (min-width: 376px) and (max-width: 575.98px) {
-
     #about.about-section {
         min-height: auto;
     }
 
     #about .about-layout {
         flex-direction: column;
-
         min-height: 0;
     }
-
-    /* Content First */
 
     .about-content-layer {
         order: 1;
@@ -656,49 +548,34 @@
         line-height: 1.6;
     }
 
-    /* Image Below Content */
-
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
-
         top: auto !important;
         right: auto !important;
         bottom: auto !important;
         left: auto !important;
-
         order: 2;
-
         width: 100% !important;
         height: clamp(300px, 78vw, 420px) !important;
-
         flex: 0 0 auto;
     }
 
     .about-image-wrapper .about-person-front {
         right: 0%;
         bottom: -40%;
-
         height: 140%;
         max-width: 100%;
     }
 
     .about-person-back {
         right: 0;
-
         height: 80%;
         max-width: 60%;
     }
 
 }
 
-
-/* =========================================
-   22. EXTRA SMALL MOBILE
-   375PX AND BELOW
-========================================= */
-
 @media (max-width: 375px) {
-
     #about.about-section {
         min-height: auto;
     }
@@ -708,8 +585,6 @@
 
         min-height: 0;
     }
-
-    /* Content First */
 
     .about-content-layer {
         order: 1;
@@ -734,55 +609,38 @@
         line-height: 1.6;
     }
 
-    /* Image Below Content */
-
     .about-image-wrapper.position-lg-absolute {
         position: relative !important;
-
         top: auto !important;
         right: auto !important;
         bottom: auto !important;
         left: auto !important;
-
         order: 2;
-
         width: 100% !important;
         height: 300px !important;
-
         min-height: 300px;
-
         flex: 0 0 auto;
     }
 
     .about-image-wrapper .about-person-front {
         right: -2%;
         bottom: -38%;
-
         height: 135%;
         max-width: 105%;
     }
 
     .about-person-back {
         right: -1%;
-
         height: 78%;
         max-width: 58%;
     }
 
 }
 
-
-/* =========================================
-   23. MARQUEE RESPONSIVE
-========================================= */
-
 @media (max-width: 767.98px) {
-
     .marquee-bottom-bar {
         --marquee-gap: 0.85rem;
-
         flex-basis: 46px;
-
         height: 46px;
     }
 
@@ -796,7 +654,6 @@
 
     .marquee-icon-wrap {
         flex-basis: 22px;
-
         width: 22px;
         height: 22px;
     }
@@ -808,20 +665,13 @@
 
 }
 
-
-/* =========================================
-   24. EXTRA SMALL MARQUEE
-========================================= */
-
 @media (max-width: 375px) {
-
     .marquee-text {
         font-size: 0.8rem;
     }
 
     .marquee-icon-wrap {
         flex-basis: 20px;
-
         width: 20px;
         height: 20px;
     }
@@ -833,12 +683,7 @@
 
 }
 
-
-/* =========================================
-   25. ACCESSIBILITY
-========================================= */
 @media (prefers-reduced-motion: reduce) {
-
     .marquee-track {
         animation: none;
         transform: none;

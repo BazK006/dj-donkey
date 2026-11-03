@@ -1,8 +1,3 @@
-/* =========================================
-   DJ DONKEY - SECTION HOME
-   CINEMATIC 3D LOGO EXPERIENCE
-========================================= */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 body {
@@ -62,10 +57,6 @@ body {
   padding-block-start: 0 !important;
 }
 
-
-/* =========================================
-   02. HERO MAIN
-========================================= */
 .logo-hero {
   position: relative;
   isolation: isolate;
@@ -95,11 +86,6 @@ body {
 
   color: #FFFFFF;
 }
-
-
-/* =========================================
-   03. CINEMATIC BACKGROUND
-========================================= */
 
 .logo-hero::before {
   content: "";
@@ -159,11 +145,6 @@ body {
 
 }
 
-
-/* =========================================
-   04. HERO INNER CONTENT
-========================================= */
-
 .logo-hero-inner {
   position: relative;
   z-index: 1;
@@ -211,11 +192,6 @@ body {
   margin: 0 0.35rem;
 }
 
-
-/* =========================================
-   06. 3D LOGO STAGE
-========================================= */
-
 .logo-stage {
   position: relative;
 
@@ -239,7 +215,6 @@ body {
 }
 
 
-/* Logo Glow */
 .logo-stage::before {
   content: "";
 
@@ -268,38 +243,23 @@ body {
   z-index: 0;
 }
 
-
-/* =========================================
-   07. THREE.JS CANVAS
-========================================= */
-
 #logo-canvas {
   position: absolute;
   inset: 0;
-
   width: 100%;
   height: 100%;
-
   display: block;
-
   z-index: 2;
-
   opacity: 0;
-
   filter:
     drop-shadow(0 12px 30px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 25px rgba(190, 24, 42, 0.12));
-
   transition: opacity 0.65s ease;
 }
 
-
-/* Canvas Ready */
 .logo-stage.is-ready #logo-canvas {
   opacity: 1;
 }
 
-
-/* Software Renderer */
 .logo-stage .software-renderer {
   position: absolute;
   inset: 0;
@@ -314,10 +274,14 @@ body {
   display: none;
 }
 
+#logo-stage {
+  touch-action: none;
+  cursor: grab;
+}
 
-/* =========================================
-   08. FALLBACK LOGO
-========================================= */
+#logo-stage.is-dragging {
+  cursor: grabbing;
+}
 
 .logo-fallback {
   position: absolute;
@@ -443,9 +407,6 @@ body {
   font-size: 1.1rem;
 }
 
-/* =========================================
-   10. RENDER STATUS
-========================================= */
 .logo-hero .render-status {
   min-height: 16px;
 
@@ -462,10 +423,6 @@ body {
   text-transform: uppercase;
 }
 
-
-/* =========================================
-   11. HERO GENRES
-========================================= */
 .logo-hero .genres {
   margin: 0;
 
@@ -572,9 +529,6 @@ body {
   height: 100%;
 }
 
-/* =========================================
-   13. TABLET
-========================================= */
 @media (max-width: 991.98px) {
 
   .logo-hero {
@@ -683,10 +637,6 @@ body {
 
 }
 
-
-/* =========================================
-   15. SMALL MOBILE
-========================================= */
 @media (max-width: 375px) {
   .logo-hero {
     padding-left: 12px;

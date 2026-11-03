@@ -1,51 +1,140 @@
-/* =========================================
-   Section: Live Performance
-========================================= */
 #live-performance {
-    /* ใช้ฟอนต์หลักที่มีความหนาแน่น เพื่อให้ได้ทรงเรขาคณิตแบบภาพต้นฉบับ */
+    width: 100%;
+    padding: clamp(70px, 9vw, 120px) 0;
+
+    background-color: #050505;
     font-family: "Inter", sans-serif;
+
+    scroll-margin-top: var(--site-header-height, 78px);
 }
 
-/* ตั้งค่าข้อความรองสีทอง */
+.performance-container {
+    width: 86%;
+    max-width: 1600px;
+
+    margin: 0 auto;
+}
+
+.performance-heading {
+    margin-bottom: 3rem;
+}
+
 .perf-subheading {
-    color: var(--brand-gold, #D6A857);
-    /* สีทองตามภาพต้นฉบับ */
+    color: #D6A857;
+
     font-size: 0.95rem;
+    font-weight: 700;
     letter-spacing: 0.15em;
 }
 
-/* ตั้งค่าข้อความหลักให้หนาและชิดกัน */
 .perf-heading {
+    color: #FFFFFF;
+
     font-size: clamp(3.2rem, 5.2vw, 5.5rem);
-    /* Responsive Size */
     font-weight: 900;
-    /* น้ำหนักหนามาก */
     line-height: 1.05;
-    /* ระยะบรรทัดชิดกัน */
+
     letter-spacing: -0.02em;
-    /* บีบช่องไฟตัวอักษรเล็กน้อย */
 }
 
-/* ตั้งค่าบล็อกสี่เหลี่ยมสีขาว */
 .perf-placeholder-block {
-    background-color: #FFFFFF;
-    /* พื้นหลังสีขาวล้วนตามภาพ */
+    position: relative;
+
     width: 100%;
-    /* กำหนดสัดส่วนภาพเป็นแนวตั้ง (คล้ายวิดีโอ Reels/TikTok) */
-    aspect-ratio: 4 / 5;
-    /* เผื่อไว้สำหรับใส่ลูกเล่นเวลานำเมาส์ไปชี้ในอนาคต */
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    height: auto;
+
+    aspect-ratio: 16 / 20;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    background-color: #151515;
+
+    border: 1px solid rgba(214, 168, 87, 0.2);
+    border-radius: 4px;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
 }
 
-/* เอฟเฟกต์เล็กน้อย เมื่อชี้ที่บล็อกว่าง (ใส่หรือไม่ใส่ก็ได้) */
-.perf-placeholder-block:hover {
-    opacity: 0.8;
-    cursor: pointer;
+.perf-placeholder-block iframe {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    pointer-events: auto;
 }
 
-/* Responsive สำหรับหน้าจอมือถือ */
-@media (max-width: 767.98px) {
-    .perf-heading {
-        font-size: 3.2rem;
+.perf-placeholder-block.perf-video-landscape {
+    aspect-ratio: 16 / 9;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+    .perf-placeholder-block:hover {
+        transform: translateY(-3px);
+        border-color: #D6A857;
     }
+
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+
+    .performance-container {
+        width: 90%;
+    }
+
+    .performance-heading {
+        margin-bottom: 2.5rem;
+    }
+
+    .perf-heading {
+        font-size: clamp(2.8rem, 5vw, 4rem);
+    }
+
+}
+
+@media (max-width: 575.98px) {
+
+    #live-performance {
+        padding: 70px 0;
+    }
+
+    .performance-container {
+        width: 90%;
+    }
+
+    .performance-heading {
+        margin-bottom: 2rem;
+    }
+
+    .perf-subheading {
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+    }
+
+    .perf-heading {
+        font-size: clamp(2.3rem, 8vw, 3.2rem);
+        line-height: 1.08;
+    }
+
+    .perf-placeholder-block {
+        border-radius: 5px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .perf-placeholder-block {
+        transition: none;
+    }
+
 }
