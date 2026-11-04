@@ -1,29 +1,21 @@
 #about.about-section {
     position: relative;
-
     display: flex;
     flex-direction: column;
-
     width: 100%;
     min-height: 100vh;
     min-height: 100svh;
-
     margin: 0;
     padding: 0;
-
     overflow: hidden;
-
     background-color: #050505;
-
     font-family: "Inter", sans-serif;
 }
 
 #about .about-layout {
     position: relative;
-
     display: flex;
     flex: 1 1 auto;
-
     width: 100%;
     min-height: calc(100vh - 52px);
     min-height: calc(100svh - 52px);
@@ -32,7 +24,6 @@
 .about-content-layer {
     position: relative;
     z-index: 2;
-
     width: 100%;
 }
 
@@ -43,29 +34,22 @@
 
 .about-subheading {
     color: #D6A857;
-
     font-size: 0.95rem;
     font-weight: 700;
-
     letter-spacing: 0.15em;
 }
 
 .about-main-heading {
     color: #FFFFFF;
-
     font-size: clamp(3.2rem, 5.2vw, 6rem);
-
     font-weight: 700;
     line-height: 1.02;
-
     letter-spacing: -0.03em;
 }
 
 .about-body-text {
     max-width: 480px;
-
     color: #E0E0E0;
-
     font-size: 1.1rem;
     font-weight: 300;
     line-height: 1.6;
@@ -73,35 +57,24 @@
 
 .about-image-wrapper {
     position: relative;
-
     width: 100%;
     height: 50vh;
-
     flex: 0 0 auto;
-
     overflow: hidden;
     isolation: isolate;
-
     background-color: #B51222;
-
     z-index: 1;
 }
 
 .about-background-image {
     position: absolute;
-
     inset: 0;
-
     display: block;
-
     width: 100%;
     height: 100%;
-
     max-width: none;
-
     object-fit: cover;
     object-position: 50% 20%;
-
     z-index: 0;
 }
 
@@ -134,7 +107,7 @@
     width: auto;
     height: 185%;
     max-width: 90%;
-    z-index: 2;
+    z-index: 5 !important;
     object-fit: contain;
     object-position: center bottom;
     filter: drop-shadow(15px 5px 25px rgba(0, 0, 0, 0.3));
@@ -163,6 +136,7 @@
 .about-image-wrapper::before {
     top: 0;
     height: 20%;
+    z-index: 4 !important;
     background: linear-gradient(to bottom,
             #050505 0%,
             rgba(5, 5, 5, 0.72) 25%,
@@ -173,6 +147,7 @@
 .about-image-wrapper::after {
     bottom: 0;
     height: 22%;
+    z-index: 6 !important;
     background: linear-gradient(to top,
             #050505 0%,
             rgba(5, 5, 5, 0.78) 25%,
@@ -286,11 +261,20 @@
 }
 
 @media (max-width: 767.98px) {
+    .about-image-wrapper::before {
+        z-index: 4;
+    }
+
     .about-image-wrapper .about-person-front {
         left: 50%;
         right: auto;
         transform: translate(-50%, 12%) scale(1.16);
         transform-origin: center bottom;
+        z-index: 5;
+    }
+
+    .about-image-wrapper::after {
+        z-index: 6;
     }
 
 }
@@ -422,18 +406,6 @@
 }
 
 @media (max-width: 991.98px) {
-
-    .about-image-wrapper::before,
-    .about-image-wrapper::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 100%;
-        z-index: 3;
-        pointer-events: none;
-    }
-
     .about-image-wrapper::before {
         top: 0;
         height: 24%;
