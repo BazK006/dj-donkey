@@ -1,4 +1,3 @@
-
 const SITE_CONFIG = {
     bookingUrl: '',
     bookingLabel: 'Get in touch',
@@ -15,15 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
         '(prefers-reduced-motion: reduce)'
     );
 
-    const SCROLL_GAP = 12;
+    const SCROLL_DEFAULT = 8;
+
+    const SCROLL_ABOUT = 8;
+    const SCROLL_PERFORMANCE = -50;
+    const SCROLL_GALLERY = -70;
+    const SCROLL_BOOKING = -80;
 
     if (!header) {
         console.warn('DONKEY UI: Header not found.');
     }
-
-    // =========================================
-    // SCROLL NAVIGATION
-    // =========================================
 
     function scrollToSection(targetSection) {
         if (!targetSection) return;
@@ -32,11 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
             ? Math.max(0, header.getBoundingClientRect().bottom)
             : 0;
 
+        const scrollOffsets = {
+            about: SCROLL_ABOUT,
+            'live-performance': SCROLL_PERFORMANCE,
+            'gallery-section': SCROLL_GALLERY,
+            'contact-section': SCROLL_BOOKING,
+        };
+
+        const scrollGap =
+            scrollOffsets[targetSection.id] ?? SCROLL_DEFAULT;
+
         const targetPosition =
             window.scrollY +
             targetSection.getBoundingClientRect().top -
             headerBottom -
-            SCROLL_GAP;
+            scrollGap;
 
         window.scrollTo({
             top: Math.max(0, targetPosition),
@@ -55,10 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return document.getElementById(targetId.slice(1));
     }
-
-    // =========================================
-    // MOBILE NAVIGATION
-    // =========================================
 
     function closeMobileMenu(callback) {
         if (!navigation || !navigation.classList.contains('show')) {
@@ -89,12 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ).hide();
     }
 
-    // =========================================
-    // NAVIGATION CLICK
-    // =========================================
-
     document.addEventListener('click', (event) => {
-        if (!(event.target instanceof Element)) return;
+        if (!(event.target instanceof Element))
+            return;
 
         if (
             event.button !== 0 ||
@@ -108,9 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const link = event.target.closest('a[href^="#"]');
 
-        if (!link) return;
+        if (!link)
+            return;
 
-        // WATCH A SET
         if (link.id === 'watch-set' && SITE_CONFIG.setVideoUrl) {
             event.preventDefault();
             window.open(
@@ -146,10 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // =========================================
-    // VIDEO CARDS
-    // =========================================
-
     videoCards.forEach((card) => {
         const video = card.querySelector('.custom-video');
 
@@ -181,10 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-
-    // =========================================
-    // BOOKING LINKS
-    // =========================================
 
     if (SITE_CONFIG.bookingUrl) {
         document.querySelectorAll('[data-booking-link]')

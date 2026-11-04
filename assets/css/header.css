@@ -51,7 +51,7 @@ body {
 
 .site-header .nav-link-item {
     position: relative;
-    color: rgba(255, 255, 255, 0.72) !important; /* ทอง */
+    color: #D6A857 !important;
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -67,7 +67,7 @@ body {
     right: 0.25rem;
     bottom: 0.45rem;
     height: 1px;
-    background-color: #ffffff;
+    background-color: #D6A857;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.25s ease;
@@ -76,7 +76,7 @@ body {
 .site-header .nav-link-item:hover,
 .site-header .nav-link-item:focus,
 .site-header .nav-link-item.active {
-    color: #ffffff !important;
+    color: #F0CC85 !important;
 }
 
 .site-header .nav-link-item:hover::after,
@@ -86,13 +86,16 @@ body {
 }
 
 .site-header .nav-contact-link {
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    color: #D6A857 !important;
+    border: 1px solid rgba(214, 168, 87, 0.55);
     padding: 0.65rem 1.2rem !important;
     margin-left: 0.35rem;
 
-    transition: background 0.25s ease,
+    transition:
+        background 0.25s ease,
         color 0.25s ease,
-        border-color 0.25s ease;
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .site-header .nav-contact-link::after {
@@ -101,9 +104,10 @@ body {
 
 .site-header .nav-contact-link:hover,
 .site-header .nav-contact-link:focus {
-    background-color: #ffffff;
-    border-color: #ffffff;
+    background-color: #D6A857;
+    border-color: #D6A857;
     color: #050505 !important;
+    box-shadow: 0 4px 18px rgba(214, 168, 87, 0.18);
 }
 
 .site-header .navbar-toggler {
